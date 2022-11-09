@@ -1,0 +1,14 @@
+joueur1:
+  sousMarin1:
+    coordonnees: [b23,b33,b43]
+  sousMarin2:
+    coordonnees: [d11,f11,e11]
+
+joueur2:
+  nom: toto
+  sousMarin1:
+    coordonnees: [b23,b33,b43]
+  sousMarin2:
+    coordonnees: [d11,f11,e11]
+
+joueur2.sousMarin2.coordonnees
