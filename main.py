@@ -3,6 +3,7 @@ def print_hi(name):
 	print("fff")
 class Mer:
 	def __int__(self):
+		pass
 
 
 if __name__ == '__main__':
