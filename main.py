@@ -13,5 +13,5 @@ if __name__ == '__main__':
 	mer.ajouterSousMarin(sousMarin)
 	sousMarin.placer(Coordonnee(1, 2, 2), Direction.DROITE)
 	print(mer.getSousMarins()[0].getCoords())
-	#print(mer.getSousMarins()[0].getCoords()[0])
+	print(mer.getSousMarins()[0])
 
