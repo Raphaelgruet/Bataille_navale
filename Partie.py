@@ -1,6 +1,6 @@
 from Joueur import joueur
-from Outils import cls
-
+from Outils import cls, posXY
+from Mer import Mer
 class partie:
 
 	__joueur1 = None
@@ -13,10 +13,11 @@ class partie:
 
 
 	def lancerPartie():
+		Mer.caseVide(60, 6)
+		posXY(0,0)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
-
 
 
 

@@ -1,12 +1,13 @@
 from Coordonnee import Coordonnee
 from Direction import Direction
-from Mer import Mer
 from SousMarin import SousMarin
 from Partie import partie
-
+import fixpath
+from colorama import init
 
 
 if __name__ == '__main__':
+	init()
 	'''mer = Mer()
 	sousMarin = SousMarin(4)
 	mer.ajouterSousMarin(sousMarin)
