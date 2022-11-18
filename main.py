@@ -5,6 +5,7 @@ from SousMarin import SousMarin
 from Partie import partie
 
 
+
 if __name__ == '__main__':
 	'''mer = Mer()
 	sousMarin = SousMarin(4)
