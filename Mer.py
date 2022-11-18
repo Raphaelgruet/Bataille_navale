@@ -16,18 +16,26 @@ class Mer:
 		lCase = 5
 		for j in range (hCase):
 			posXY(x, j + y)
-			print(Back.GREEN, " ", Style.RESET_ALL)
+			print("  ")
 		for j in range (lCase):
 			posXY(j+x,y)
-			print(Back.GREEN, "  ", Style.RESET_ALL)
+			print(" ")
 		for j in range(hCase):
 			posXY(x+lCase, j + y)
-			print(Back.GREEN, " ", Style.RESET_ALL)
+			print("  ")
 		for j in range (lCase):
 			posXY(j+x,y+hCase)
-			print(Back.GREEN, "  ", Style.RESET_ALL)
+			print("   ")
 
 	def plateauVide(x, y):
+		hCase = 3
+		lCase = 5
+		for k in range (3):
+			for i in range (5):
+				for j in range (10):
+					posXY(7+k*60, 1)
+					print("profondeur:",k*100)
+					Mer.caseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 
 	def impact(self, coordonneImpact):
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:

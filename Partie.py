@@ -1,6 +1,8 @@
 from Joueur import joueur
 from Outils import cls, posXY
 from Mer import Mer
+from colorama import Fore, Style, Back
+
 class partie:
 
 	__joueur1 = None
@@ -14,8 +16,10 @@ class partie:
 
 	def lancerPartie():
 		cls()
-		Mer.caseVide(60, 2)
-		posXY(1,1)
+		print(Back.GREEN)
+		Mer.plateauVide(1, 2)
+		print(Style.RESET_ALL)
+		posXY(1,24)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
