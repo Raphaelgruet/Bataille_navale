@@ -23,8 +23,12 @@ class partie:
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
-
-
+		while(nomCorrect==False):
+			try:
+				print("que le joueur 1 entre son prenom")
+				#=input()
+			except ValueError:
+				pass
 
 
 
