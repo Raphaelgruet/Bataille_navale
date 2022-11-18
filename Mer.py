@@ -8,6 +8,7 @@ class Mer:
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarin.append(sousmarin)
 		sousmarin.setMer(self)
+	def afficher():
 
 	def impact(self, coordonneImpact):
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:

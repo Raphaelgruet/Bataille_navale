@@ -1,5 +1,5 @@
 from Joueur import joueur
-
+import os
 
 class partie:
 
@@ -14,6 +14,12 @@ class partie:
 
 	def lancerPartie():
 		print("boujour, vous voici sur le jeu de bateille navale ")
+		input("appuyer sur entrer pour commencer la partie")
+		os.system("cls")
+
+
+
+
 # affichage merJ1
 # demande de placement de un sous marin
 # affichage merJ1
