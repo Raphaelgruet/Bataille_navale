@@ -13,11 +13,13 @@ class partie:
 
 
 	def lancerPartie():
-		Mer.caseVide(60, 6)
-		posXY(0,0)
+		cls()
+		Mer.caseVide(60, 2)
+		posXY(1,1)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
+
 
 
 

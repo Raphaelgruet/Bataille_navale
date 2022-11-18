@@ -12,11 +12,23 @@ class Mer:
 		self.__sousMarin.append(sousmarin)
 		sousmarin.setMer(self)
 	def caseVide(x, y):
-		hCase = 5
+		hCase = 3
 		lCase = 5
-		for j in range (5):
+		for j in range (hCase):
 			posXY(x, j + y)
 			print(Back.GREEN, " ", Style.RESET_ALL)
+		for j in range (lCase):
+			posXY(j+x,y)
+			print(Back.GREEN, "  ", Style.RESET_ALL)
+		for j in range(hCase):
+			posXY(x+lCase, j + y)
+			print(Back.GREEN, " ", Style.RESET_ALL)
+		for j in range (lCase):
+			posXY(j+x,y+hCase)
+			print(Back.GREEN, "  ", Style.RESET_ALL)
+
+	def plateauVide(x, y):
+
 	def impact(self, coordonneImpact):
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
 			if coordonneImpact not in self.__impact:
