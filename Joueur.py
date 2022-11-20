@@ -1,5 +1,6 @@
 from Mer import Mer
-
+from colorama import Fore, Style, Back
+from Outils import cls
 class joueur:
 
 	__mer = Mer()
@@ -19,18 +20,18 @@ class joueur:
 	def setCouleur(self, value):
 		self.__couleur = value
 
-	def getcouleur(self):
+	def getCouleur(self):
 		return self.__couleur
-	def getMer(self, value):
-		self.__mer = value
-	def choixCouleur():  # permet de savoir quelles couleur va choisir le premier joueur
+	def getMer(self):
+		return self.__mer
+	def choixCouleur(self):  # permet de savoir quelles couleur va choisir le premier joueur
 		couleurChoisi = False
 		while (couleurChoisi == False):
 			try:
-				print(Fore.GREEN, "quelle couleur voulez vous en tant que joueur 1, faites le choix entre, ""R"" pour rouge ou ""B"" pour bleu ?")
+				print(Fore.GREEN, "quelle couleur voulez vous en tant que ", self.getNom(),", faites le choix entre, ""R"" pour rouge ou ""B"" pour bleu ?")
 				print(Fore.RED, "")
-				joueur.setcouleur(input(" "))
-				if (joueur.getCouleur() == "B" or joueur.getCouleur() == "R"):
+				self.setCouleur(input(" "))
+				if (self.getCouleur() == "B" or self.getCouleur() == "R"):
 					print(Style.RESET_ALL)
 					couleurChoisi = True
 					cls()
