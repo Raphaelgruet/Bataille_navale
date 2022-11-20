@@ -23,7 +23,6 @@ class joueur:
 		return self.__couleur
 	def getMer(self, value):
 		self.__mer = value
-
 	def choixCouleur():  # permet de savoir quelles couleur va choisir le premier joueur
 		couleurChoisi = False
 		while (couleurChoisi == False):

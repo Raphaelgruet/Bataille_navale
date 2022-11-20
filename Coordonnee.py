@@ -54,3 +54,15 @@ class Coordonnee:
 
 	def getZ(self):
 		return self.__z
+#permet de donner la position sur le plauteur d une coordonnee
+	def emplacementCoordonnee(self):
+		for i in range (10):
+			if self.__x == i+1:
+				x=8+i*5
+		for j in range (3):
+			if self.__z == j+1:
+				x = x+60*j
+		for k in range(5):
+			if self.__y == k+1:
+				y =6+3 * k
+		return x, y

@@ -2,6 +2,7 @@ from Joueur import joueur
 from Outils import cls, posXY
 from Mer import Mer
 from colorama import Fore, Style, Back
+from Coordonnee import Coordonnee
 
 class partie:
 
@@ -18,18 +19,28 @@ class partie:
 		cls()
 		print(Back.GREEN)
 		Mer.plateauVide(1, 2)
+		c=Coordonnee(9,1,1)
 		print(Style.RESET_ALL)
-		posXY(1,24)
+		print(Back.RED)
+		x,y=c.emplacementCoordonnee()
+		posXY(x,y)
+		print("   ")
+		posXY(x,y+1) # a tester
+		print("   ")
+		print(Style.RESET_ALL)
+		input()
+		"""posXY(1,24)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
-		while(nomCorrect==False):
-			try:
-				print("que le joueur 1 entre son prenom")
-				#=input()
-			except ValueError:
-				pass
-
+		print("que le joueur 1 entre son prenom")
+		joueur1=joueur(input())
+		print("que le joueur 2 entre son prenom")
+		joueur2=joueur(input())
+		print("cette bataille opposera ", joueur1.getNom().upper(), " contre ",joueur2.getNom().upper())
+		print("bonne bataille")
+		input()
+		cls()"""
 
 
 # affichage merJ1

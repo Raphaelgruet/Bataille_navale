@@ -11,7 +11,7 @@ class Mer:
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarin.append(sousmarin)
 		sousmarin.setMer(self)
-	def caseVide(x, y):
+	def affichageCaseVide(x, y):
 		hCase = 3
 		lCase = 5
 		for j in range (hCase):
@@ -27,7 +27,7 @@ class Mer:
 			posXY(j+x,y+hCase)
 			print("   ")
 
-	def plateauVide(x, y):
+	def AffichagelateauVide(x, y):
 		hCase = 3
 		lCase = 5
 		for k in range (3):
@@ -37,7 +37,8 @@ class Mer:
 					print("profondeur:",k*100)
 					Mer.caseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 
-	def impact(self, coordonneImpact):
+
+	def impact(self, coordonneImpact): #=>je pense qu'il faut le mettre dans des coordonnee
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
 			if coordonneImpact not in self.__impact:
 				self.__impact.append(coordonneImpact)
@@ -46,24 +47,17 @@ class Mer:
 
 	def getDimentionZ(self):
 		return self.__dimentionZ
-
 	def setDimentionZ(self, value):
 		self.__dimentionZ = value
-
 	def getDimentionX(self):
 		return self.__dimentionX
-
 	def setDimentionX(self, value):
 		self.__dimentionX = value
-
 	def getDimentionY(self):
 		return self.__dimentionY
-
 	def setDimentionY(self, value):
 		self.__dimentionY = value
-
 	def getSousMarins(self):
 		return self.__sousMarin
-
 	def getImpacts(self):
 		return self.__impact
