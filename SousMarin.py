@@ -1,6 +1,6 @@
 from Coordonnee import Coordonnee
 from Direction import Direction
-
+from Mer import Mer
 
 class SousMarin:
 	__taille = 0
