@@ -38,6 +38,7 @@ class SousMarin:
 			else:
 				raise Exception("Le sous marin est trop grand pour etre placé ici")
 		if direction == Direction.DROITE:
+			print(self.__mer())
 			for sousMarin in self.__mer():
 				for smCoord in sousMarin.getCoords():
 					if (coordonnee.getX() + self.__taille > smCoord.getX() >= coordonnee.getX() and

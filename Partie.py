@@ -21,19 +21,22 @@ class partie:
 		print(Style.RESET_ALL)
 		posXY(1,24)
 		print("boujour, vous voici sur le jeu de bateille navale ")
-		input("appuyer sur entrer pour commencer la partie")
+		#input("appuyer sur entrer pour commencer la partie")
 		cls()
 		#creation des joueur
 		print("que le joueur 1 entre son prenom")
-		self.__joueur1=joueur(input())
+		self.__joueur1=joueur("C")#test
+		#self.__joueur1 = joueur(input())
 		print("que le joueur 2 entre son prenom")
-		self.__joueur2=joueur(input())
+		#self.__joueur2=joueur(input())
+		self.__joueur2 = joueur("A")#test
 		print("cette bataille opposera ", self.__joueur1.getNom().upper(), " contre ",self.__joueur2.getNom().upper())
 		print("bonne bataille")
-		input()
+		#input()
 		cls()
 		#savoir la couleur
-		self.__joueur1.choixCouleur()
+		#self.__joueur1.choixCouleur()
+		self.__joueur1.setCouleur("B")#test
 		if self.__joueur1.getCouleur()=="B":
 			self.__joueur2.setCouleur("R")
 		else:
@@ -41,15 +44,16 @@ class partie:
 
 		#placement des sousmarin J1
 		print ("c est a", self.__joueur1.getNom()," de placer ces sousmarin")
-		sousMarin = SousMarin(4)
-		self.__joueur1.getMer().ajouterSousMarin(sousMarin)
-		X = int(input("entrez la ligne du debut de votre sousMarin\n"))
+		sousMarin1 = SousMarin(4)
+		self.__joueur1.getMer().ajouterSousMarin(sousMarin1)
+		"""X = int(input("entrez la ligne du debut de votre sousMarin\n"))
 		Y = int(input("entrez la colone du debut de votre sousMarin\n"))
 		Z = int(input("entrez la profondeur du debut de votre sousMarin\n"))
-		c=Coordonnee(X, Y, Z)
-		sousMarin.setMer(self.__joueur1.getMer())
+		c=Coordonnee(X, Y, Z)"""
+		c = Coordonnee(1, 1, 1)#test
+		sousMarin1.setMer(self.__joueur1.getMer())
 		#direction=  il faut m'aider a écrire cela
-		sousMarin.placer(c, Direction.DROITE)
+		sousMarin1.placer(c, Direction.DROITE)
 		cls()
 		print(Back.GREEN)
 		Mer.affichagePlateauVide(1, 2)
