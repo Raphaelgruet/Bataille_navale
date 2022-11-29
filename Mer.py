@@ -7,9 +7,6 @@ class Mer:
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
-	def __int__(self):
-		self.__sousMarin
-		self.__impact
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarin.append(sousmarin)
 		sousmarin.setMer(self)
@@ -28,6 +25,7 @@ class Mer:
 		for j in range (lCase):
 			posXY(j+x,y+hCase)
 			print("   ")
+
 	def affichagePion(x,y,couleur):
 		print(couleur)
 		x, y = c.emplacementCoordonnee()
@@ -36,6 +34,7 @@ class Mer:
 		posXY(x, y + 1)  # a tester
 		print("   ")
 		print(Style.RESET_ALL)
+
 	def affichagePlateauVide(x, y):
 		hCase = 3
 		lCase = 5

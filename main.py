@@ -1,5 +1,6 @@
 from Coordonnee import Coordonnee
 from Direction import Direction
+from Mer import Mer
 from SousMarin import SousMarin
 from Partie import partie
 import fixpath

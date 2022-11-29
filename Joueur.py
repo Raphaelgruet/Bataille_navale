@@ -1,7 +1,7 @@
 from Mer import Mer
 from colorama import Fore, Style, Back
 from Outils import cls
-class joueur:
+class Joueur:
 
 	__mer = Mer()
 	__nom = ""

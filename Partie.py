@@ -1,4 +1,4 @@
-from Joueur import joueur
+from Joueur import Joueur
 from Outils import cls, posXY
 from Mer import Mer
 from colorama import Fore, Style, Back
@@ -11,7 +11,7 @@ class partie:
 	__joueur2 = None
 	__temps = 0
 
-	def __init__ (self):
+	def __init__(self):
 		partie.lancementPartie(self)
 
 	def lancementPartie(self):
@@ -25,11 +25,11 @@ class partie:
 		cls()
 		#creation des joueur
 		print("que le joueur 1 entre son prenom")
-		self.__joueur1=joueur("C")#test
+		self.__joueur1 = Joueur("C")#test
 		#self.__joueur1 = joueur(input())
 		print("que le joueur 2 entre son prenom")
 		#self.__joueur2=joueur(input())
-		self.__joueur2 = joueur("A")#test
+		self.__joueur2 = Joueur("A")#test
 		print("cette bataille opposera ", self.__joueur1.getNom().upper(), " contre ",self.__joueur2.getNom().upper())
 		print("bonne bataille")
 		#input()
@@ -51,16 +51,15 @@ class partie:
 		Z = int(input("entrez la profondeur du debut de votre sousMarin\n"))
 		c=Coordonnee(X, Y, Z)"""
 		c = Coordonnee(1, 1, 1)#test
-		sousMarin1.setMer(self.__joueur1.getMer())
-		#direction=  il faut m'aider a écrire cela
+		#sousMarin1.setMer(self.__joueur1.getMer()) <== PAS BESOIN, la fonction "ajoutSousMarin()" definie déjà sa Mer à ce moment la
 		sousMarin1.placer(c, Direction.DROITE)
 		cls()
 		print(Back.GREEN)
 		Mer.affichagePlateauVide(1, 2)
 		print(Style.RESET_ALL)
 
-		if self.__joueur1.getcouleur()=="B":
-			couleur=Back.BLUE
+		if self.__joueur1.getcouleur() == "B":
+			couleur = Back.BLUE
 		for i in sousMarin.getCoords().keys():
 			x,y=i.emplacementCoordonnee()
 			affichagePion(x, y, couleur)

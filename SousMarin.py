@@ -25,7 +25,7 @@ class SousMarin:
 			raise Exception("La profondeur du sous marin est incorrect")
 
 		if direction == Direction.HAUT:
-			for sousMarin in self.__mer():
+			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
 					if (smCoord.getX() == coordonnee.getX() and
 							coordonnee.getY() - self.__taille < smCoord.getY() <= coordonnee.getY() and
@@ -38,7 +38,7 @@ class SousMarin:
 			else:
 				raise Exception("Le sous marin est trop grand pour etre placé ici")
 		if direction == Direction.DROITE:
-			for sousMarin in self.__mer():
+			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
 					if (coordonnee.getX() + self.__taille > smCoord.getX() >= coordonnee.getX() and
 							smCoord.getY() == coordonnee.getY() and
@@ -51,7 +51,7 @@ class SousMarin:
 			else:
 				raise Exception("Le sous marin est trop grand pour etre placé ici")
 		if direction == Direction.BAS:
-			for sousMarin in self.__mer():
+			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
 					if (smCoord.getX() == coordonnee.getX() and
 							coordonnee.getY() + self.__taille > smCoord.getY() >= coordonnee.getY() and
@@ -64,7 +64,7 @@ class SousMarin:
 			else:
 				raise Exception("Le sous marin est trop grand pour etre placé ici")
 		if direction == Direction.GAUCHE:
-			for sousMarin in self.__mer():
+			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
 					if (coordonnee.getX() - self.__taille < smCoord.getX() <= coordonnee.getX() and
 							smCoord.getY() == coordonnee.getY() and
