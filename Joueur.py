@@ -24,17 +24,12 @@ class Joueur:
 		return self.__couleur
 	def getMer(self):
 		return self.__mer
-	def choixCouleur(self):  # permet de savoir quelles couleur va choisir le premier joueur
+	def choixCouleur(self):  # permet de savoir quelle couleur va choisir le premier joueur
 		couleurChoisi = False
-		while (couleurChoisi == False):
-			try:
-				print(Fore.GREEN, "quelle couleur voulez vous en tant que ", self.getNom(),", faites le choix entre, ""R"" pour rouge ou ""B"" pour bleu ?")
-				print(Fore.RED, "")
-				self.setCouleur(input(" "))
-				if (self.getCouleur() == "B" or self.getCouleur() == "R"):
-					print(Style.RESET_ALL)
-					couleurChoisi = True
-					cls()
-			except ValueError:
-				pass
-
+		while not couleurChoisi:
+			couleur = input(Fore.GREEN + self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
+			if couleur == "B" or couleur == "R":
+				self.__couleur = couleur
+				print(Style.RESET_ALL)
+				couleurChoisi = True
+				cls()

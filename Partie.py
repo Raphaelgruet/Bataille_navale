@@ -7,8 +7,7 @@ from SousMarin import SousMarin
 from Direction import Direction
 class partie:
 
-	__joueur1 = None
-	__joueur2 = None
+	__joueurs = [None, None]
 	__temps = 0
 
 	def __init__(self):
@@ -23,42 +22,48 @@ class partie:
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		#input("appuyer sur entrer pour commencer la partie")
 		cls()
-		#creation des joueur
-		print("que le joueur 1 entre son prenom")
-		self.__joueur1 = Joueur("C")#test
-		#self.__joueur1 = joueur(input())
-		print("que le joueur 2 entre son prenom")
-		#self.__joueur2=joueur(input())
-		self.__joueur2 = Joueur("A")#test
-		print("cette bataille opposera ", self.__joueur1.getNom().upper(), " contre ",self.__joueur2.getNom().upper())
-		print("bonne bataille")
-		#input()
-		cls()
-		#savoir la couleur
-		#self.__joueur1.choixCouleur()
-		self.__joueur1.setCouleur("B")#test
-		if self.__joueur1.getCouleur()=="B":
-			self.__joueur2.setCouleur("R")
-		else:
-			self.__joueur2.setCouleur("B")
 
-		#placement des sousmarin J1
-		print ("c est a", self.__joueur1.getNom()," de placer ces sousmarin")
-		sousMarin1 = SousMarin(4)
-		self.__joueur1.getMer().ajouterSousMarin(sousMarin1)
-		"""X = int(input("entrez la ligne du debut de votre sousMarin\n"))
-		Y = int(input("entrez la colone du debut de votre sousMarin\n"))
-		Z = int(input("entrez la profondeur du debut de votre sousMarin\n"))
-		c=Coordonnee(X, Y, Z)"""
-		c = Coordonnee(1, 1, 1)#test
-		#sousMarin1.setMer(self.__joueur1.getMer()) <== PAS BESOIN, la fonction "ajoutSousMarin()" definie déjà sa Mer à ce moment la
-		sousMarin1.placer(c, Direction.DROITE)
+		#creation des joueurs
+		for i in range(2):
+			self.__joueurs[i] = Joueur(input("Le joueur " + str(i+1) + " entre son prénom :")) #Creation des joueurs à partir du nom entré dans le terminal
+
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
+		print("Bonne bataille !")
+
+		#input()
+		cls() # <== Je sais pas à quoi ça sert mais ça a pas l'air de faire grand chose
+
+		#savoir la couleur
+		self.__joueurs[0].choixCouleur()
+		if self.__joueurs[0].getCouleur() == "B":
+			self.__joueurs[1].setCouleur("R")
+		else:
+			self.__joueurs[1].setCouleur("B")
+
+		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "," , self.__joueurs[1], "aura donc la couleur", self.__joueurs[1].getCouleur())
+
+		#placement des sous-marins
+		for i in range(2):
+			print (self.__joueurs[i], "place ses sous-marins")
+			#Les sous-marins sont ajoutés dans la mer du joueur
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+			#Attribution des positions des sous-marins du joueur
+			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
+				x = int(input("Entrez la ligne du debut de votre sousMarin " + str(j+1) + "\n"))
+				y = int(input("Entrez la colone du debut de votre sousMarin " + str(j+1) + "\n"))
+				z = int(input("Entrez la profondeur du debut de votre sousMarin " + str(j+1) + "\n"))
+				direction = input("Entrez la direction de votre sousMarin " + str(j+1) + " (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS)\n")
+				coord = Coordonnee(x, y, z)
+				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 		cls()
 		print(Back.GREEN)
 		Mer.affichagePlateauVide(1, 2)
 		print(Style.RESET_ALL)
 
-		if self.__joueur1.getcouleur() == "B":
+		if self.__joueurs[0].getcouleur() == "B":
 			couleur = Back.BLUE
 		for i in sousMarin.getCoords().keys():
 			x,y=i.emplacementCoordonnee()

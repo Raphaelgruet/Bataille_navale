@@ -1,15 +1,19 @@
 from colorama import Fore, Style, Back
 from Outils import posXY, cls
 from colorama import init
+
 class Mer:
+
 	__sousMarin = []
 	__impact = []
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
+
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarin.append(sousmarin)
 		sousmarin.setMer(self)
+
 	def affichageCaseVide(x, y):
 		hCase = 3
 		lCase = 5
@@ -39,12 +43,11 @@ class Mer:
 		hCase = 3
 		lCase = 5
 		for k in range (3):
+			print("profondeur:", k * 100) #J'ai déplacé cette ligne qui était dans la dernière boucle for
 			for i in range (5):
 				for j in range (10):
 					posXY(7+k*60, 1)
-					print("profondeur:",k*100)
 					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
-
 
 	def impact(self, coordonneImpact): #=>je pense qu'il faut le mettre dans des coordonnee
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
