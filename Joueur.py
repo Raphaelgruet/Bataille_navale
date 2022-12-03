@@ -27,7 +27,8 @@ class Joueur:
 	def choixCouleur(self):  # permet de savoir quelle couleur va choisir le premier joueur
 		couleurChoisi = False
 		while not couleurChoisi:
-			couleur = input(Fore.GREEN + self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
+			print(Fore.GREEN)
+			couleur = input( self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
 			if couleur == "B" or couleur == "R":
 				self.__couleur = couleur
 				print(Style.RESET_ALL)
