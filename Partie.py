@@ -13,29 +13,32 @@ class partie:
 		partie.lancementPartie(self)
 	def demandeEmplacement(self,j):
 		x, y, z = -1, -1, -1
-		direction=""
-		while not 0 < x < 11:
+		direction = None
+		while not 0 < x < 11: #Valeur "hardcoded" à changer avec la taille de la mer
 			try:
 				x = int(input("Entrez la ligne du debut de votre sousMarin " + str(j + 1) + "\n"))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
+
 		while not 0 < y < 6:
 			try:
 				y = int(input("Entrez la colone du debut de votre sousMarin " + str(j + 1) + "\n"))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
+
 		while not 0 < z < 4:
 			try:
 				z = int(input("Entrez la profondeur du debut de votre sousMarin " + str(j + 1) + "\n"))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
-		while not direction==("D" or "G" or "H" or "B"):
+		while not (direction == "D" or direction == "G" or direction == "H" or direction == "B"): #FAIT : Correction de la condition
 			try:
 				direction = input("Entrez la direction de votre sousMarin " + str(j + 1) + " (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS)\n")
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 		return direction,x,y,z
+
 	def lancementPartie(self):
 		"""
 		cls()
@@ -46,7 +49,8 @@ class partie:
 		cls()"""
 		#creation des joueurs
 		for i in range(2):
-			self.__joueurs[i] = Joueur("""input("Le joueur " + str(i+1) + " entre son prénom :")""" "b") #Creation des joueurs à partir du nom entré dans le terminal
+			self.__joueurs[i] = Joueur('''input("Le joueur " + str(i+1) + " entre son prénom :")''' "b") #Creation des joueurs à partir du nom entré dans le terminal
+
 		"""
 		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
 		print("Bonne bataille !")
@@ -55,6 +59,7 @@ class partie:
 		#savoir la couleur
 		self.__joueurs[0].choixCouleur("B")
 		"""
+
 		self.__joueurs[0].setCouleur("B")
 		if self.__joueurs[0].getCouleur() == "B":
 			self.__joueurs[1].setCouleur("R")
@@ -65,27 +70,31 @@ class partie:
 
 		#placement des sous-marins
 		for i in range(2):
-			print (self.__joueurs[i], "place ses sous-marins")
 			#Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))''' #En commentaires pour des tests plus rapide
 			#Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
-				cls()
-				Mer.affichagePlateauVide(1, 2,Back.GREEN)
-				# affichage sousmarin
+
 				if self.__joueurs[i].getCouleur() == "B":
 					couleur = Back.BLUE
 				else:
 					couleur = Back.RED
+				cls()
+				Mer.affichagePlateauVide(1, 2, couleur)
+
+
 				#print(self.__joueurs[i].getMer().getSousMarins()[j].getCoords()) #je n'est pas de coordonne??????? je veux faire comme la fonction
 				for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():# la veux les differents positions du sous marin
-					x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
-					affichagePion(x, y, couleur) # et la je les affiche
+					x, y = g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
+					self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
 				posXY(1, 24)
-				direction, x, y, z=partie.demandeEmplacement(self,j)
+
+				#Placement des sous-marins
+				print(self.__joueurs[i], "place ses sous-marins")
+				direction, x, y, z = partie.demandeEmplacement(self,j)
 				coord = Coordonnee(x, y, z)
 
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
@@ -94,7 +103,7 @@ class partie:
 		cls()
 		posXY(1,1)
 		print("nous pouvons commencer")
-		print("au joueur",self.__joueurs[0].getNom(),"de commencer")
+		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
 		gagne=False
