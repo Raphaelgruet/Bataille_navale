@@ -106,6 +106,7 @@ class partie:
 		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
+		#commencemment partie
 		gagne=False
 		while not gagne:
 
@@ -119,7 +120,7 @@ class partie:
 				Mer.affichagePlateauVide(1, 2,couleur)
 				for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
 					x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
-					affichagePion(x, y, couleur) # et la je les affiche
+					self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
 				posXY(1, 24)
 				direction, x, y, z=partie.demandeEmplacement(self,j)
 				coord = Coordonnee(x, y, z)

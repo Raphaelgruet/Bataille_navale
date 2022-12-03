@@ -33,7 +33,6 @@ class Mer:
 
 	def affichagePion(x,y,couleur):
 		print(couleur)
-		x, y = c.emplacementCoordonnee()
 		posXY(x, y)
 		print("   ")
 		posXY(x, y + 1)  # a tester
