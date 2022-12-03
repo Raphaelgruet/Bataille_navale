@@ -11,7 +11,31 @@ class partie:
 
 	def __init__(self):
 		partie.lancementPartie(self)
+	def demandeEmplacement(self,j):
+		x, y, z = -1, -1, -1
+		direction=""
+		while not 0 < x < 11:
+			try:
+				x = int(input("Entrez la ligne du debut de votre sousMarin " + str(j + 1) + "\n"))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
+		while not 0 < y < 6:
+			try:
+				y = int(input("Entrez la colone du debut de votre sousMarin " + str(j + 1) + "\n"))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
+		while not 0 < z < 4:
+			try:
+				z = int(input("Entrez la profondeur du debut de votre sousMarin " + str(j + 1) + "\n"))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
+		while not direction==("D" or "G" or "H" or "B"):
+			try:
+				direction = input("Entrez la direction de votre sousMarin " + str(j + 1) + " (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS)\n")
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
+		return direction,x,y,z
 	def lancementPartie(self):
 		"""
 		cls()
@@ -50,22 +74,47 @@ class partie:
 			#Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
 				cls()
-				Mer.affichagePlateauVide(1, 2)
+				Mer.affichagePlateauVide(1, 2,Back.GREEN)
 				# affichage sousmarin
 				if self.__joueurs[i].getCouleur() == "B":
 					couleur = Back.BLUE
 				else:
 					couleur = Back.RED
-				print(self.__joueurs[i].getMer().getSousMarins()[j].getCoords()) #je n'est pas de coordonne??????? je veux faire comme la fonction
+				#print(self.__joueurs[i].getMer().getSousMarins()[j].getCoords()) #je n'est pas de coordonne??????? je veux faire comme la fonction
 				for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():# la veux les differents positions du sous marin
 					x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
 					affichagePion(x, y, couleur) # et la je les affiche
 				posXY(1, 24)
-				x = int(input("Entrez la ligne du debut de votre sousMarin " + str(j+1) + "\n"))
-				y = int(input("Entrez la colone du debut de votre sousMarin " + str(j+1) + "\n"))
-				z = int(input("Entrez la profondeur du debut de votre sousMarin " + str(j+1) + "\n"))
-				direction = input("Entrez la direction de votre sousMarin " + str(j+1) + " (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS)\n")
+				direction, x, y, z=partie.demandeEmplacement(self,j)
 				coord = Coordonnee(x, y, z)
+
+				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
+				input()
+				cls()
+		cls()
+		posXY(1,1)
+		print("nous pouvons commencer")
+		print("au joueur",self.__joueurs[0].getNom(),"de commencer")
+		input()
+		cls()
+		gagne=False
+		while not gagne:
+
+			for i in range(2):
+				if self.__joueurs[i].getCouleur() == "B":
+					couleur = Back.RED
+					couleur1 = Back.RED
+				else:
+					couleur = Back.BLUE
+					couleur1 = Back.RED
+				Mer.affichagePlateauVide(1, 2,couleur)
+				for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
+					x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
+					affichagePion(x, y, couleur) # et la je les affiche
+				posXY(1, 24)
+				direction, x, y, z=partie.demandeEmplacement(self,j)
+				coord = Coordonnee(x, y, z)
+
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 				input()
 				cls()

@@ -40,7 +40,7 @@ class Mer:
 		print("   ")
 		print(Style.RESET_ALL)
 
-	def affichagePlateauVide(x, y):
+	def affichagePlateauVide(x, y,couleur):
 		hCase = 3
 		lCase = 5
 
@@ -52,12 +52,11 @@ class Mer:
 			for i in range (1,6):
 				posXY(4 + k * 60, 4+i*3)
 				print (i)
-			print(Back.GREEN)
+			print(couleur)
 			for i in range (5):
 				for j in range (10):
 					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 			print(Style.RESET_ALL)
-
 	def impact(self, coordonneImpact): #=>je pense qu'il faut le mettre dans des coordonnee
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
 			if coordonneImpact not in self.__impact:
