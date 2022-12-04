@@ -11,8 +11,8 @@ class partie:
 	__temps = 0
 
 	def __init__(self):
-		#partie.lancementPartie(self)
-		partie.test(self)
+		partie.lancementPartie(self)
+		#partie.test(self)
 	def demandeEmplacement(self,j):
 		x, y, z = -1, -1, -1
 		direction = None
@@ -34,20 +34,20 @@ class partie:
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
-		while not (direction == "D" or direction == "G" or direction == "H" or direction == "B"): #FAIT : Correction de la condition
+		while not (direction == Direction.DROITE or direction == Direction.GAUCHE or direction == Direction.HAUT or direction == Direction.BAS): #FAIT : Correction de la condition
 			try:
 				direction = input("Entrez la direction de votre sousMarin " + str(j + 1) + " (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS)\n")
-				if direction =="D":
-					d=Direction.DROITE
-				elif direction =="B":
-					d=Direction.BAS
+				if direction == "D":
+					direction = Direction.DROITE
+				elif direction == "B":
+					direction = Direction.BAS
 				elif direction == "H":
-					d=Direction.HAUT
+					direction = Direction.HAUT
 				else:
-					d=Direction.GAUCHE
+					direction = Direction.GAUCHE
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
-		return d,x,y,z
+		return direction,x,y,z
 
 	def lancementPartie(self):
 
@@ -85,8 +85,8 @@ class partie:
 			#Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))'''
 			#Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
@@ -98,7 +98,7 @@ class partie:
 
 				#Placement des sous-marins
 				print(couleur, self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
-				direction, x, y, z = partie.demandeEmplacement(self,j)
+				direction, x, y, z = partie.demandeEmplacement(self, j)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 				if j==len(self.__joueurs[i].getMer().getSousMarins())-1:

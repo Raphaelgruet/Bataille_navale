@@ -10,7 +10,6 @@ from colorama import init
 
 if __name__ == '__main__':
 	init()
-
 	partie()
 	'''joueur=Joueur("nom")
 	sousMarin = SousMarin(4)
