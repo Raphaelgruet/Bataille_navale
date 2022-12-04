@@ -11,8 +11,8 @@ class partie:
 	__temps = 0
 
 	def __init__(self):
-		#partie.lancementPartie(self)
-		partie.test(self)
+		partie.lancementPartie(self)
+		#partie.test(self)
 	def demandeEmplacement(self,j):
 		x, y, z = -1, -1, -1
 		direction = None
@@ -52,63 +52,59 @@ class partie:
 	def lancementPartie(self):
 
 		cls()
-		Mer.affichagePlateauVide(1, 2)
+		Mer.affichagePlateauVide(1, 2,Back.GREEN)
 		posXY(1,24)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
+
 		#creation des joueurs
 		for i in range(2):
 			self.__joueurs[i] = Joueur(input("Le joueur " + str(i+1) + " entre son prénom :")) #Creation des joueurs à partir du nom entré dans le terminal
-
-
 		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
 		print("Bonne bataille !")
 		input()
-		cls() # <== Je sais pas à quoi ça sert mais ça a pas l'air de faire grand chose
-		#savoir la couleur
-		self.__joueurs[0].choixCouleur("B")
+		cls()
 
-
-		self.__joueurs[0].setCouleur("B")
+		#choix couleur
+		self.__joueurs[0].choixCouleur()
 		if self.__joueurs[0].getCouleur() == "B":
 			self.__joueurs[1].setCouleur("R")
 		else:
 			self.__joueurs[1].setCouleur("B")
-
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "," , self.__joueurs[1], "aura donc la couleur", self.__joueurs[1].getCouleur())
+		input()
+		cls()
 
 		#placement des sous-marins
 		for i in range(2):
+			if self.__joueurs[i].getCouleur() == "B":
+				couleur = Back.BLUE
+			else:
+				couleur = Back.RED
 			#Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2)) #En commentaires pour des tests plus rapide
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
 			#Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
-
-				if self.__joueurs[i].getCouleur() == "B":
-					couleur = Back.BLUE
-				else:
-					couleur = Back.RED
-				cls()
-				Mer.affichagePlateauVide(1, 2, couleur)
-
-
-				#print(self.__joueurs[i].getMer().getSousMarins()[j].getCoords()) #je n'est pas de coordonne??????? je veux faire comme la fonction
-				for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():# la veux les differents positions du sous marin
-					x, y = g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
-					self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
+				Mer.affichagePlateauVide(1, 2, Back.GREEN)
+				if j!=0:
+					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
+						x, y = g.emplacementCoordonnee()
+						Mer.affichagePion(x, y, couleur)
 				posXY(1, 24)
 
 				#Placement des sous-marins
-				print(self.__joueurs[i], "place ses sous-marins")
+				print(couleur, self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
 				direction, x, y, z = partie.demandeEmplacement(self,j)
 				coord = Coordonnee(x, y, z)
-
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
-				input()
+				if j==len(self.__joueurs[i].getMer().getSousMarins())-1:
+					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
+						x, y = g.emplacementCoordonnee()
+						Mer.affichagePion(x, y, couleur)
 				cls()
 		cls()
 		posXY(1,1)
@@ -175,12 +171,17 @@ class partie:
 				cls()
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
 				#Placement des sous-marins
+				if j!=0:
+					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
+						x, y = g.emplacementCoordonnee()
+						Mer.affichagePion(x, y, couleur)
 				posXY(1, 24)
 				print(couleur,self.__joueurs[i], "place ses sous-marins",Style.RESET_ALL)
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 1, 1), Direction.DROITE)
-				for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
-					x, y = g.emplacementCoordonnee()
-					Mer.affichagePion(x, y, couleur)
+				if j==len(self.__joueurs[i].getMer().getSousMarins())-1:
+					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
+						x, y = g.emplacementCoordonnee()
+						Mer.affichagePion(x, y, couleur)
 				input()
 				cls()
 
