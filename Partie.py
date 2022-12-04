@@ -11,8 +11,8 @@ class partie:
 	__temps = 0
 
 	def __init__(self):
-		partie.lancementPartie(self)
-		#partie.test(self)
+		#partie.lancementPartie(self)
+		partie.test(self)
 	def demandeEmplacement(self,j):
 		x, y, z = -1, -1, -1
 		direction = None
@@ -177,7 +177,10 @@ class partie:
 						Mer.affichagePion(x, y, couleur)
 				posXY(1, 24)
 				print(couleur,self.__joueurs[i], "place ses sous-marins",Style.RESET_ALL)
-				self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 1, 1), Direction.DROITE)
+				if i==1:
+					self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 1, 1), Direction.DROITE)
+				else:
+					self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 2, 1), Direction.DROITE)
 				if j==len(self.__joueurs[i].getMer().getSousMarins())-1:
 					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
 						x, y = g.emplacementCoordonnee()
