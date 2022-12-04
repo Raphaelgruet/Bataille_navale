@@ -3,20 +3,18 @@ from Direction import Direction
 from Mer import Mer
 from SousMarin import SousMarin
 from Partie import partie
+from Joueur import Joueur
 import fixpath
 from colorama import init
 
 
 if __name__ == '__main__':
 	init()
+
 	partie()
-	'''mer = Mer()
+	'''joueur=Joueur("nom")
 	sousMarin = SousMarin(4)
-	mer.ajouterSousMarin(sousMarin)
+	joueur.getMer().ajouterSousMarin(sousMarin)
 	sousMarin.placer(Coordonnee(1, 2, 2), Direction.DROITE)
-	print(mer.getSousMarins()[0].getCoords())
-	print(mer.getSousMarins()[0])'''
-
-
-
-
+	print(joueur.getMer().getSousMarins()[0].getCoords())
+	print(joueur.getMer().getSousMarins()[0])'''

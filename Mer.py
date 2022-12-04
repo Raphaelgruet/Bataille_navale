@@ -31,13 +31,7 @@ class Mer:
 			posXY(j+x,y+hCase)
 			print("   ")
 
-	def affichagePion(x,y,couleur):
-		print(couleur)
-		posXY(x, y)
-		print("   ")
-		posXY(x, y + 1)  # a tester
-		print("   ")
-		print(Style.RESET_ALL)
+
 
 	def affichagePlateauVide(x, y,couleur):
 		hCase = 3
@@ -79,3 +73,10 @@ class Mer:
 		return self.__sousMarin
 	def getImpacts(self):
 		return self.__impact
+	def affichagePion(x, y, couleur):
+		print(couleur)
+		posXY(x, y)
+		print("   ")
+		posXY(x, y + 1)  # a tester
+		print("   ")
+		print(Style.RESET_ALL)
