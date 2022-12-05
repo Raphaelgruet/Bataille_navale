@@ -13,6 +13,7 @@ class partie:
 	def __init__(self):
 		partie.lancementPartie(self)
 		#partie.test(self)
+
 	def demandeEmplacement(self,j):
 		x, y, z = -1, -1, -1
 		direction = None
@@ -65,7 +66,6 @@ class partie:
 		print("Bonne bataille !")
 		input()
 		cls()
-
 		#choix couleur
 		self.__joueurs[0].choixCouleur()
 		if self.__joueurs[0].getCouleur() == "B":
@@ -112,7 +112,7 @@ class partie:
 		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
-		"""
+
 		#commencemment partie
 		gagne=False
 		while not gagne:
@@ -135,10 +135,14 @@ class partie:
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 				input()
 				cls()
-"""
 
-
-
+	def testVictoire(self):
+		# Fonction qui retourne le joueur qui a gagné la partie dans le cas ou celle-ci est terminée,
+		# dans le cas contraire la fonction retourne None
+		for i in range(2):
+			if self.__joueurs[i].getPV() == 0:
+				return self.__joueurs[i]
+		return None
 
 # affichage merJ2Vide et demande au j1 des coordonnees pour impact
 # verification du win et affichage resultat
@@ -193,5 +197,6 @@ class partie:
 		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
+
 #def saugerde(self...):
 	#def savegarde(self...)

@@ -12,6 +12,16 @@ class Joueur:
 	def __str__(self):
 		return str(self.__nom)
 
+	def getPV(self):
+		#Fonction qui retourne le nombre de pv du joueur (nombre de coordonnées de sous-marins non touchées)
+
+		pv = 0
+		for sousMarin in self.__mer.getSousMarins():
+			for coord in sousMarin.getCoords().keys():
+				if sousMarin.getCoords()[coord] != 't' and sousMarin.getCoords()[coord] != 'c':
+					pv += 1
+		return pv
+
 	def setNom(self, value):
 		self.__nom = value
 
