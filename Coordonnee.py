@@ -13,6 +13,12 @@ class Coordonnee:
 	def __str__(self):
 		return str(self.__x) + str(self.__y) + str(self.__z)
 
+	def __eq__(self, other):
+		if other.getX() == self.getX() and other.getY() == self.getY() and other.getZ() == self.getZ():
+			return True
+		else:
+			return False
+
 	# COORDONNEE X
 
 	def setX(self, value):
@@ -54,8 +60,10 @@ class Coordonnee:
 
 	def getZ(self):
 		return self.__z
-#permet de donner la position sur le plauteur d une coordonnee
+
 	def emplacementCoordonnee(self):
+	# Permet de donner la position sur le plateau d'une coordonnée
+
 		for i in range (10):
 			if self.__x == i+1:
 				x=8+i*5

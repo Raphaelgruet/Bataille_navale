@@ -4,14 +4,14 @@ from colorama import init
 
 class Mer:
 
-	__sousMarin = []
-	__impact = []
+	__sousMarins = []
+	__impacts = []
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
 
 	def ajouterSousMarin(self, sousmarin):
-		self.__sousMarin.append(sousmarin)
+		self.__sousMarins.append(sousmarin)
 		sousmarin.setMer(self)
 
 	def affichageCaseVide(x, y):
@@ -31,30 +31,43 @@ class Mer:
 			posXY(j+x,y+hCase)
 			print("   ")
 
-
-
-	def affichagePlateauVide(x, y,couleur):
+	def affichagePlateauVide(x, y, couleur):
 		hCase = 3
 		lCase = 5
 
-		for k in range (3):
+		for k in range(3):
 			posXY(7 + k * 60, 1)
 			print("profondeur:", k * 100+100)
 			posXY(6 + k * 60, 4)
 			print("   1    2    3    4    5    6    7    8    9    10  ")
-			for i in range (1,6):
+			for i in range(1,6):
 				posXY(4 + k * 60, 4+i*3)
 				print (i)
 			print(couleur)
-			for i in range (5):
-				for j in range (10):
+			for i in range(5):
+				for j in range(10):
 					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 			print(Style.RESET_ALL)
 
-	def impact(self, coordonneImpact): #=>je pense qu'il faut le mettre dans des coordonnee
+	def impact(self, coordonneImpact):
+		# Fonction qui ajoute les impacts dans la liste d'impacts et change l'état des coordonnées des sous-marins
+		# en fonction la position de l'impact.
+		# TODO etat de position "en vue"
+
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
-			if coordonneImpact not in self.__impact:
-				self.__impact.append(coordonneImpact)
+			if coordonneImpact not in self.__impacts:
+				self.__impacts.append(coordonneImpact)
+				for sousMarin in self.__sousMarins:
+					nbrTouche = 0
+					for coord in sousMarin.getCoords():
+						if coord == coordonneImpact:
+							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
+								sousMarin.getCoords()[coord] = 't'
+						if sousMarin.getCoords()[coord] == 't':
+							nbrTouche += 1
+					if nbrTouche == sousMarin.getTaille():
+						for coord in sousMarin.getCoords():
+							sousMarin.getCoords()[coord] = 'c'
 				return True
 		return False
 
@@ -71,9 +84,9 @@ class Mer:
 	def setDimentionY(self, value):
 		self.__dimentionY = value
 	def getSousMarins(self):
-		return self.__sousMarin
+		return self.__sousMarins
 	def getImpacts(self):
-		return self.__impact
+		return self.__impacts
 	def affichagePion(x, y, couleur):
 		print(couleur)
 		posXY(x, y)

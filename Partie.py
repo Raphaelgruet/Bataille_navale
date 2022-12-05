@@ -14,8 +14,7 @@ class partie:
 
 	def __init__(self):
 		self.lancementPartie()
-
-	# partie.test(self)
+		# partie.test(self)
 
 	def demandeEmplacement(self, j):
 		x, y, z = -1, -1, -1
@@ -73,6 +72,7 @@ class partie:
 		print("Bonne bataille !")
 		input()
 		cls()
+
 		# choix couleur
 		self.__joueurs[0].choixCouleur()
 		if self.__joueurs[0].getCouleur() == "B":
@@ -90,11 +90,13 @@ class partie:
 				couleur = Back.BLUE
 			else:
 				couleur = Back.RED
+
 			# Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))'''
+
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
@@ -114,7 +116,6 @@ class partie:
 						x, y = g.emplacementCoordonnee()
 						Mer.affichagePion(x, y, couleur)
 				cls()
-		cls()
 		posXY(1, 1)
 		print("La partie commence !")
 		print("Au joueur " + self.__joueurs[0].getNom() + " de commencer")
@@ -125,7 +126,7 @@ class partie:
 		while True:
 			for i in range(2):
 
-				#Affichage
+				# Affichage
 				if self.__joueurs[i].getCouleur() == "B":
 					couleur = Back.RED
 					couleur1 = Back.RED
@@ -138,17 +139,15 @@ class partie:
 					self.__joueurs[i].getMer().affichagePion(x, y, couleur)  # et la je les affiche
 				posXY(1, 24)
 
-				#Detection coordonnées + impact
+				# Detection coordonnées + impact
 				direction, x, y, z = partie.demandeEmplacement(self, j)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().impact(coord)
+				cls()
 
-				#Détection victoire
+				# Détection victoire
 				gagnant = self.testVictoire()
-				if gagnant is None:
-					input()
-					cls()
-				else:
+				if gagnant is not None:
 					print("#####################################\n")
 					print("  VICTOIRE de " + str(gagnant) + " !\n")
 					print("#####################################")
