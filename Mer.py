@@ -50,6 +50,7 @@ class Mer:
 				for j in range (10):
 					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 			print(Style.RESET_ALL)
+
 	def impact(self, coordonneImpact): #=>je pense qu'il faut le mettre dans des coordonnee
 		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
 			if coordonneImpact not in self.__impact:
