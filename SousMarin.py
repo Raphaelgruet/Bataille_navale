@@ -1,8 +1,14 @@
 from Coordonnee import Coordonnee
 from Direction import Direction
-from Mer import Mer
+
 
 class SousMarin:
+
+	# o = non vu
+	# v = vu
+	# t = touché
+	# c = coulé
+
 	__taille = 0
 	__coords = {}
 	__mer = None
@@ -31,12 +37,12 @@ class SousMarin:
 							coordonnee.getY() - self.__taille < smCoord.getY() <= coordonnee.getY() and
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
-			if coordonnee.getY() - self.__taille > 0:
+			if coordonnee.getY() - self.__taille+1 > 0:
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX(), coordonnee.getY() - i, coordonnee.getZ())
-					self.__coords[coord] = 'O'
+					self.__coords[coord] = 'o'
 			else:
-				raise Exception("Le sous marin est trop grand pour etre placé ici")
+				raise Exception("Le sous marin est trop grand pour être placé ici")
 		if direction == Direction.DROITE:
 			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
@@ -44,12 +50,12 @@ class SousMarin:
 							smCoord.getY() == coordonnee.getY() and
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
-			if coordonnee.getX() + self.__taille <= self.__mer.getDimentionX():
+			if coordonnee.getX() + self.__taille-1 <= self.__mer.getDimentionX():
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX() + i, coordonnee.getY(), coordonnee.getZ())
-					self.__coords[coord] = 'O'
+					self.__coords[coord] = 'o'
 			else:
-				raise Exception("Le sous marin est trop grand pour etre placé ici")
+				raise Exception("Le sous marin est trop grand pour être placé ici")
 		if direction == Direction.BAS:
 			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
@@ -57,12 +63,12 @@ class SousMarin:
 							coordonnee.getY() + self.__taille > smCoord.getY() >= coordonnee.getY() and
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
-			if coordonnee.getY() + self.__taille <= self.__mer.getDimentionY():
+			if coordonnee.getY() + self.__taille-1 <= self.__mer.getDimentionY():
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX(), coordonnee.getY() + i, coordonnee.getZ())
-					self.__coords[coord] = 'O'
+					self.__coords[coord] = 'o'
 			else:
-				raise Exception("Le sous marin est trop grand pour etre placé ici")
+				raise Exception("Le sous marin est trop grand pour être placé ici")
 		if direction == Direction.GAUCHE:
 			for sousMarin in self.__mer.getSousMarins():
 				for smCoord in sousMarin.getCoords():
@@ -70,25 +76,25 @@ class SousMarin:
 							smCoord.getY() == coordonnee.getY() and
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
-			if coordonnee.getX() - self.__taille > 0:
+			if coordonnee.getX() - self.__taille+1 > 0:
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX() - i, coordonnee.getY(), coordonnee.getZ())
-					self.__coords[coord] = 'O'
+					self.__coords[coord] = 'o'
 			else:
-				raise Exception("Le sous marin est trop grand pour etre placé ici")
+				raise Exception("Le sous marin est trop grand pour être placé ici")
 
 	def toucher(self, coordonnee):
 		if coordonnee in self.__coord.keys():
-			if self.__coord[coordonnee] == 'O':
-				self.__coords[coordonnee] = 'T'
+			if self.__coord[coordonnee] == 'o':
+				self.__coords[coordonnee] = 't'
 		coule = True
 		for etat in self.__coords.values():
-			if etat != 'T':
+			if etat != 't':
 				coule = False
 		if coule:
 			print("Sous marin coulé")
 			for coord in self.__coords.keys():
-				self.__coords[coord] = 'C'
+				self.__coords[coord] = 'c'
 
 	def getTaille(self):
 		return self.__taille

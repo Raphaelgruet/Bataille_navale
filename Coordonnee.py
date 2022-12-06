@@ -19,6 +19,10 @@ class Coordonnee:
 		else:
 			return False
 
+	def __hash__(self):
+		# Method de hashage
+		return int(self.__str__())
+
 	# COORDONNEE X
 
 	def setX(self, value):

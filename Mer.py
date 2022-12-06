@@ -1,6 +1,5 @@
 from colorama import Fore, Style, Back
 from Outils import posXY, cls
-from colorama import init
 
 class Mer:
 
@@ -9,6 +8,10 @@ class Mer:
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
+	'''__dimentionX = Partie.dimensionsMers.getX()
+	__dimentionY = Partie.dimensionsMers.getY()
+	__dimentionZ = Partie.dimensionsMers.getZ()'''
+	# TODO dimensions à partir de Partie
 
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarins.append(sousmarin)

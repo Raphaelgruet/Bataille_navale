@@ -1,16 +1,10 @@
-from Coordonnee import Coordonnee
-from Direction import Direction
-from Mer import Mer
-from SousMarin import SousMarin
-from Partie import partie
-from Joueur import Joueur
-import fixpath
+from Partie import Partie
 from colorama import init
 
 
 if __name__ == '__main__':
 	init()
-	partie()
+	Partie()
 	'''joueur=Joueur("nom")
 	sousMarin = SousMarin(4)
 	joueur.getMer().ajouterSousMarin(sousMarin)
