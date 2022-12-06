@@ -44,3 +44,9 @@ class Joueur:
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()
+	def couleur(self):
+
+		if self.__couleur == "B":
+			return Back.BLUE,Back.RED#couleur du joueur 1 puis couleur joueur2
+		else:
+			return Back.RED,Back.BLUE
