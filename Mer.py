@@ -1,5 +1,6 @@
 from colorama import Fore, Style, Back
 from Outils import posXY, cls
+from Coordonnee import Coordonnee
 
 # Class de Mer
 class Mer:
@@ -42,9 +43,9 @@ class Mer:
 					elif valeurEmplacement == "v":
 						couleur = Back.CYAN
 					elif valeurEmplacement == "t":
-						couleur = Back.MAGENTA
-					else:
 						couleur = Back.RED
+					else:
+						couleur = Back.MAGENTA
 					x, y = i.emplacementCoordonnee()
 					Mer.affichagePion(x, y, couleur)
 		posXY(1, 24)
