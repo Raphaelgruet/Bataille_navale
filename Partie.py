@@ -23,7 +23,7 @@ class Partie:
 		cls()
 		Mer.affichagePlateauVide(1, 2, Back.WHITE)
 		posXY(1, 24)
-		print("boujour, vous voici sur le jeu de bateille navale ")
+		print("boujour, vous voici sur le jeu de bataille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
 
@@ -46,7 +46,6 @@ class Partie:
 			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
 		input()
 		cls()
-
 
 		'''cls()
 		Mer.affichagePlateauVide(1, 2, Back.GREEN)
@@ -132,28 +131,6 @@ class Partie:
 					print("  VICTOIRE de " + str(gagnant) + " !\n")
 					print("#####################################")
 					return True
-
-		# Commencement partie
-		# Mer.affichagePlateauVide(1, 2,couleur)
-		# for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
-		# 	x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
-		# 	self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
-		# posXY(1, 24)
-		# direction, x, y, z = Partie.demandeEmplacement(self,j)
-		# coord = Coordonnee(x, y, z)
-		# self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
-		# input()
-		# cls()
-#
-	# affichage merJ2Vide et demande au j1 des coordonnees pour impact
-	# verification du win et affichage resultat
-	# passage au j2 avec la merVide du j1 et demande des coordonnees pour impact
-	# affichage resultat
-	# boucle
-	# affichage merJ2 et demande au j1 des coordonnees pour impact
-	# verification du win et affichage resultat
-	# passage au j2 avec la mer du j1 et demande des coordonnees pour impact
-	# affichage resultat
 
 	def testVictoire(self):
 		# Fonction qui retourne le joueur qui a gagné la partie dans le cas ou celle-ci est terminée,

@@ -97,15 +97,12 @@ class Mer:
 		if 0 < coordonneImpact.getX() <= self.__dimentionX and 0 < coordonneImpact.getY() <= self.__dimentionY and 0 < coordonneImpact.getZ() <= self.__dimentionZ:
 			if coordonneImpact not in self.__impacts:
 				self.__impacts.append(coordonneImpact)
+				touche = False
 				for sousMarin in self.__sousMarins:
 					nbrTouche = 0
 					for coord in sousMarin.getCoords():
-						if(((coord.getX() == coordonneImpact.getX()-1 or coord.getX() == coordonneImpact.getX()+1) and coord.getY() == coordonneImpact.getY() and coord.getZ() == coordonneImpact.getZ()) or
-							(coord.getX() == coordonneImpact.getX() and (coord.getY() == coordonneImpact.getY()-1 or coord.getY() == coordonneImpact.getY()+1) and coord.getZ() == coordonneImpact.getZ()) or
-							(coord.getX() == coordonneImpact.getX() and coord.getY() == coordonneImpact.getY() and (coord.getZ() == coordonneImpact.getZ()-1 or coord.getZ() == coordonneImpact.getZ()+1))):
-							sousMarin.getCoords()[coord] = 'v'
-							print("SOUS-MARIN EN VU !")
 						if coord == coordonneImpact:
+							touche = True
 							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
 								sousMarin.getCoords()[coord] = 't'
 								print("TOUCHÉ !")
@@ -115,8 +112,19 @@ class Mer:
 						print("COULÉ !")
 						for coord in sousMarin.getCoords():
 							sousMarin.getCoords()[coord] = 'c'
-				return True
+				for sousMarin in self.__sousMarins:
+					if not touche:
+						for coord in sousMarin.getCoords():
+							if (sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't' and
+									((coord.getX() == coordonneImpact.getX() - 1 or coord.getX() == coordonneImpact.getX() + 1) and coord.getY() == coordonneImpact.getY() and coord.getZ() == coordonneImpact.getZ()) or
+									(coord.getX() == coordonneImpact.getX() and (coord.getY() == coordonneImpact.getY() - 1 or coord.getY() == coordonneImpact.getY() + 1) and coord.getZ() == coordonneImpact.getZ()) or
+									(coord.getX() == coordonneImpact.getX() and coord.getY() == coordonneImpact.getY() and (coord.getZ() == coordonneImpact.getZ() - 1 or coord.getZ() == coordonneImpact.getZ() + 1))):
+								sousMarin.getCoords()[coord] = 'v'
+								print("SOUS-MARIN EN VU !")
+			return True
 		return False
+
+		# TODO bug de vu (reécriture sur une case touché ou coulé)
 
 	def getDimentionZ(self):
 		return self.__dimentionZ
