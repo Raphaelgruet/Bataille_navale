@@ -67,8 +67,7 @@ class Partie:
 
 		# Creation des joueurs
 		for i in range(2):
-			self.__joueurs[i] = Joueur(input("Le joueur " + str(
-				i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
+			self.__joueurs[i] = Joueur(input("Le joueur " + str(i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
 		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
 			  self.__joueurs[1].getNom().upper())
 		print("Bonne bataille !")
@@ -132,20 +131,61 @@ class Partie:
 		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
-		"""
-		#commencemment partie
+
+		# commencemment partie
+		while True:
+			for i in range(2):
+
+				#Affichage
+				if self.__joueurs[i].getCouleur() == "B":
+					couleur = Back.RED
+					couleur1 = Back.RED
+				else:
+					couleur = Back.BLUE
+					couleur1 = Back.RED
 				Mer.affichagePlateauVide(1, 2,couleur)
 				for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
-					x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
+					x,y = g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
 					self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
+				Mer.affichagePlateauVide(1, 2, couleur)
+				for g in self.__joueurs[i].getMer().getImpacts():  # la veux les differents positions du sous marin
+					x, y = g.emplacementCoordonnee()  # la je les transforme en position pour le terminale cdm
+					self.__joueurs[i].getMer().affichagePion(x, y, couleur)  # et la je les affiche
 				posXY(1, 24)
-				direction, x, y, z=partie.demandeEmplacement(self,j)
+				direction, x, y, z = Partie.demandeEmplacement(self,j)
+
+				#Detection coordonnées + impact
+				direction, x, y, z = Partie.demandeEmplacement(self, j)
 				coord = Coordonnee(x, y, z)
+				self.__joueurs[i].getMer().impact(coord)
+
 				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 				input()
 				cls()
-"""
 
+				# Détection victoire
+				gagnant = self.testVictoire()
+				if gagnant is None:
+					input()
+					cls()
+				else:
+					print("#####################################\n")
+					print("  VICTOIRE de " + str(gagnant) + " !\n")
+					print("#####################################")
+					return True
+
+		# Commencemment partie
+		# Mer.affichagePlateauVide(1, 2,couleur)
+		# for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
+		# 	x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
+		# 	self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
+		# posXY(1, 24)
+		# direction, x, y, z = Partie.demandeEmplacement(self,j)
+		# coord = Coordonnee(x, y, z)
+		# self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
+		# input()
+		# cls()
+#
 	# affichage merJ2Vide et demande au j1 des coordonnees pour impact
 	# verification du win et affichage resultat
 	# passage au j2 avec la merVide du j1 et demande des coordonnees pour impact
@@ -155,6 +195,14 @@ class Partie:
 	# verification du win et affichage resultat
 	# passage au j2 avec la mer du j1 et demande des coordonnees pour impact
 	# affichage resultat
+
+	def testVictoire(self):
+		# Fonction qui retourne le joueur qui a gagné la partie dans le cas ou celle-ci est terminée,
+		# dans le cas contraire la fonction retourne None
+		for i in range(2):
+			if self.__joueurs[i].getPV() == 0:
+				return self.__joueurs[i]
+		return None
 
 	def test(self):
 		for i in range(2):
