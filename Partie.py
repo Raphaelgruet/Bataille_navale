@@ -68,8 +68,10 @@ class Partie:
 
 		# Creation des joueurs
 		for i in range(2):
-			self.__joueurs[i] = Joueur(input("Le joueur " + str(i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
-		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
+			self.__joueurs[i] = Joueur(input("Le joueur " + str(
+				i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
+			  self.__joueurs[1].getNom().upper())
 		print("Bonne bataille !")
 		input()
 		cls()
@@ -96,13 +98,13 @@ class Partie:
 
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
+				cls()
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
 				for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
 					for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
 						x, y = g.emplacementCoordonnee()
 						Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
 				posXY(1, 24)
-
 				# Placement des sous-marins
 				print(self.__joueurs[i].getCouleur(), self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
 				placer = False
@@ -111,6 +113,7 @@ class Partie:
 						direction, x, y, z = Partie.demandeEmplacement(self, j)
 						coord = Coordonnee(x, y, z)
 						self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
+						input()
 						placer = True
 					except Exception as e:
 						print(e)
@@ -120,9 +123,10 @@ class Partie:
 						for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
 							x, y = g.emplacementCoordonnee()
 							Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
-				cls()
+						input()
+						cls()
 
-		# TODO bug de superposition des mers au niveau de l'affichage
+							# TODO bug de superposition des mers au niveau de l'affichage
 
 		cls()
 		posXY(1, 1)
@@ -131,7 +135,7 @@ class Partie:
 		input()
 		cls()
 
-		# Commencement de la partie
+							# Commencement de la partie
 		while True:
 			for i in range(2):
 
