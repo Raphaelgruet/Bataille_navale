@@ -10,11 +10,13 @@ class SousMarin:
 	# c = coulé
 
 	__taille = 0
-	__coords = {}
+	__coords = None
 	__mer = None
 
 	def __init__(self, taille):
 		self.__taille = taille
+		self.__coords = {}
+		self.__mer = None
 
 	def __str__(self):
 		toString = "["

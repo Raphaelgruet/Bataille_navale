@@ -13,6 +13,10 @@ class Mer:
 	__dimentionZ = Partie.dimensionsMers.getZ()'''
 	# TODO dimensions à partir de Partie
 
+	def __init__(self):
+		self.__sousMarins = []
+		self.__impacts = []
+
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarins.append(sousmarin)
 		sousmarin.setMer(self)
@@ -66,9 +70,11 @@ class Mer:
 						if coord == coordonneImpact:
 							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
 								sousMarin.getCoords()[coord] = 't'
+								print("TOUCHÉ !")
 						if sousMarin.getCoords()[coord] == 't':
 							nbrTouche += 1
 					if nbrTouche == sousMarin.getTaille():
+						print("COULÉ !")
 						for coord in sousMarin.getCoords():
 							sousMarin.getCoords()[coord] = 'c'
 				return True

@@ -1,19 +1,23 @@
 from Mer import Mer
 from colorama import Fore, Style, Back
 from Outils import cls
-class Joueur:
 
-	__mer = Mer()
+
+class Joueur:
+	__mer = None
 	__nom = ""
-	__couleur=""
+	__couleur = ""
+
 	def __init__(self, nom):
 		self.__nom = nom
+		self.__couleur = ""
+		self.__mer = Mer()
 
 	def __str__(self):
 		return str(self.__nom)
 
 	def getPV(self):
-		#Fonction qui retourne le nombre de pv du joueur (nombre de coordonnées de sous-marins non touchées)
+		# Fonction qui retourne le nombre de pv du joueur (nombre de coordonnées de sous-marins non touchées)
 
 		pv = 0
 		for sousMarin in self.__mer.getSousMarins():
@@ -27,26 +31,30 @@ class Joueur:
 
 	def getNom(self):
 		return self.__nom
+
 	def setCouleur(self, value):
 		self.__couleur = value
 
 	def getCouleur(self):
 		return self.__couleur
+
 	def getMer(self):
 		return self.__mer
+
 	def choixCouleur(self):  # permet de savoir quelle couleur va choisir le premier joueur
 		couleurChoisi = False
 		while not couleurChoisi:
 			print(Fore.GREEN)
-			couleur = input( self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
+			couleur = input(self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
 			if couleur == "B" or couleur == "R":
 				self.__couleur = couleur
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()
+
 	def couleur(self):
 
 		if self.__couleur == "B":
-			return Back.BLUE,Back.RED#couleur du joueur 1 puis couleur joueur2
+			return Back.BLUE, Back.RED  # couleur du joueur 1 puis couleur joueur2
 		else:
-			return Back.RED,Back.BLUE
+			return Back.RED, Back.BLUE

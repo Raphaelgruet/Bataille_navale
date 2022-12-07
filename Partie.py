@@ -123,43 +123,34 @@ class Partie:
 						Mer.affichagePion(x, y, couleur)
 				cls()
 
-				#TODO bug de superposition des mers au niveau de l'affichage
+			#TODO bug de superposition des mers au niveau de l'affichage
 
 		cls()
 		posXY(1, 1)
-		print("nous pouvons commencer")
-		print("au joueur " + self.__joueurs[0].getNom() + " de commencer")
+		print("La partie peut ")
+		print("C'est à " + self.__joueurs[0].getNom() + " de commencer")
 		input()
 		cls()
 
-		# commencemment partie
+		# Commencement de la partie
 		while True:
 			for i in range(2):
 
 				#Affichage
 				if self.__joueurs[i].getCouleur() == "B":
 					couleur = Back.RED
-					couleur1 = Back.RED
 				else:
 					couleur = Back.BLUE
-					couleur1 = Back.RED
-				Mer.affichagePlateauVide(1, 2,couleur)
-				for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
-					x,y = g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
-					self.__joueurs[i].getMer().affichagePion(x, y, couleur) # et la je les affiche
 				Mer.affichagePlateauVide(1, 2, couleur)
 				for g in self.__joueurs[i].getMer().getImpacts():  # la veux les differents positions du sous marin
 					x, y = g.emplacementCoordonnee()  # la je les transforme en position pour le terminale cdm
 					self.__joueurs[i].getMer().affichagePion(x, y, couleur)  # et la je les affiche
 				posXY(1, 24)
-				direction, x, y, z = Partie.demandeEmplacement(self,j)
 
 				#Detection coordonnées + impact
 				direction, x, y, z = Partie.demandeEmplacement(self, j)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().impact(coord)
-
-				self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 				input()
 				cls()
 
@@ -174,7 +165,7 @@ class Partie:
 					print("#####################################")
 					return True
 
-		# Commencemment partie
+		# Commencement partie
 		# Mer.affichagePlateauVide(1, 2,couleur)
 		# for g in self.__joueurs[i].getMer().getImpacts():# la veux les differents positions du sous marin
 		# 	x,y=g.emplacementCoordonnee() #la je les transforme en position pour le terminale cdm
