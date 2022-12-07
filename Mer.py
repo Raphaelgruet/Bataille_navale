@@ -17,13 +17,30 @@ class Mer:
 	def __init__(self):
 		self.__sousMarins = []
 		self.__impacts = []
-	def affichage(self,couleurPlateau, couleurPion):
+	def affichage(self, couleurPlateau, couleurPion, modeAffichage):
 		cls()
 		Mer.affichagePlateauVide(1, 2, couleurPlateau)
-		for o in range(len(self.__sousMarins)):
-			for i in self.__sousMarins[o].getCoords().keys():
-				x, y = i.emplacementCoordonnee()
-				Mer.affichagePion(x, y, couleurPion)
+		if modeAffichage:
+			for o in range(len(self.__sousMarins)):
+				for i in self.__sousMarins[o].getCoords().keys():
+					x, y = i.emplacementCoordonnee()
+					Mer.affichagePion(x, y, couleurPion)
+		else:
+			for o in range(len(self.__impacts)):
+
+				for i in self.__impacts[o].getCoords().keys():
+					couleur=None
+					valeurEmplacement=self.__sousMarins[o].getCoords[i]
+					if valeurEmplacement=="o":
+						couleur=Back.CYAN
+					elif valeurEmplacement=="v":
+						couleur=Back.MAGENTA
+					elif valeurEmplacement=="t":
+						couleur=Back.WHITE
+					else:
+						couleur=Back.BLACK
+					x, y = i.emplacementCoordonnee()
+					Mer.affichagePion(x, y, couleur)
 		posXY(1, 24)
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarins.append(sousmarin)

@@ -17,47 +17,36 @@ class Partie:
 	def __init__(self):
 		Partie.lancementPartie(self)
 
-	# partie.test(self)
-
-	def demandeEmplacement(self, j):
-		x, y, z = -1, -1, -1
-		direction = None
-		print("Entrez l'emplacement de votre sous-marin " + str(j + 1) + " :")
-		while not 0 < x < Partie.dimensionsMers.getX()+1:
-			try:
-				x = int(input("  La COLONNE du debut de votre sous-marin = "))
-			except:
-				print("vous avez fait une erreur, veillez recommencer")
-
-		while not 0 < y < Partie.dimensionsMers.getY()+1:
-			try:
-				y = int(input("  La LIGNE du debut de votre sous-marin = "))
-			except:
-				print("vous avez fait une erreur, veillez recommencer")
-
-		while not 0 < z < Partie.dimensionsMers.getZ()+1:
-			try:
-				z = int(input("  La PROFONDEUR de votre sous-marin = "))
-			except:
-				print("vous avez fait une erreur, veillez recommencer")
-
-		while not (
-				direction == Direction.DROITE or direction == Direction.GAUCHE or direction == Direction.HAUT or direction == Direction.BAS):
-			try:
-				direction = input("  La DIRECTION de votre sous-marin (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS) = ")
-				if direction == "D":
-					direction = Direction.DROITE
-				elif direction == "B":
-					direction = Direction.BAS
-				elif direction == "H":
-					direction = Direction.HAUT
-				else:
-					direction = Direction.GAUCHE
-			except:
-				print("vous avez fait une erreur, veillez recommencer")
-		return direction, x, y, z
-
 	def lancementPartie(self):
+
+		# Partie test
+		cls()
+		Mer.affichagePlateauVide(1, 2, Back.GREEN)
+		posXY(1, 24)
+		print("boujour, vous voici sur le jeu de bateille navale ")
+		input("appuyer sur entrer pour commencer la partie")
+		cls()
+
+		# Creation des joueurs
+
+		self.__joueurs[1] = Joueur("b")
+		self.__joueurs[0] = Joueur("c")  # Creation des joueurs à partir du nom entré dans le terminal
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
+			  self.__joueurs[1].getNom().upper())
+		print("Bonne bataille !")
+		input()
+		cls()
+
+		# choix couleur
+
+		self.__joueurs[0].setCouleur(Back.RED)
+		self.__joueurs[1].setCouleur(Back.BLUE)
+		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
+			  self.__joueurs[1],
+			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
+		input()
+		cls()
+
 
 		'''cls()
 		Mer.affichagePlateauVide(1, 2, Back.GREEN)
@@ -94,7 +83,7 @@ class Partie:
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
 				cls()
-				self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
+				self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur(), True)
 				# Placement des sous-marins
 				print(self.__joueurs[i].getCouleur(), self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
 				placer = False
@@ -108,7 +97,7 @@ class Partie:
 						print(e)
 
 				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
-					self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
+					self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur(), True)
 			input()
 
 		cls()
@@ -132,7 +121,7 @@ class Partie:
 				self.__joueurs[i].getMer().affichage(couleur, couleurPion, False)
 
 				#Detection coordonnées + impact
-				direction, x, y, z = Partie.demandeEmplacement(self, j)
+				x, y, z = Partie.demandeImpact(self)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().impact(coord)
 				input()
@@ -178,69 +167,66 @@ class Partie:
 				return self.__joueurs[i]
 		return None
 
-	def test(self):
-		cls()
-		Mer.affichagePlateauVide(1, 2, Back.GREEN)
-		posXY(1, 24)
-		print("boujour, vous voici sur le jeu de bateille navale ")
-		input("appuyer sur entrer pour commencer la partie")
-		cls()
+	def demandeEmplacement(self, j):
 
-		# Creation des joueurs
+		x, y, z = -1, -1, -1
+		direction = None
+		print("Entrez les coordonnées de votre impact " + str(j + 1) + " :")
+		while not 0 < x < Partie.dimensionsMers.getX()+1:
+			try:
+				x = int(input("  La COLONNE du debut de votre sous-marin = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-		self.__joueurs[1] = Joueur("b")
-		self.__joueurs[0] = Joueur("c")  # Creation des joueurs à partir du nom entré dans le terminal
-		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
-			  self.__joueurs[1].getNom().upper())
-		print("Bonne bataille !")
-		input()
-		cls()
+		while not 0 < y < Partie.dimensionsMers.getY()+1:
+			try:
+				y = int(input("  La LIGNE du debut de votre sous-marin = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-		# choix couleur
+		while not 0 < z < Partie.dimensionsMers.getZ()+1:
+			try:
+				z = int(input("  La PROFONDEUR de votre sous-marin = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-		self.__joueurs[0].setCouleur(Back.RED)
-		self.__joueurs[1].setCouleur(Back.BLUE)
-		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
-			  self.__joueurs[1],
-			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
-		input()
-		cls()
+		while not (direction == Direction.DROITE or direction == Direction.GAUCHE or direction == Direction.HAUT or direction == Direction.BAS):
+			try:
+				direction = input("  La DIRECTION de votre sous-marin (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS) = ")
+				if direction == "D":
+					direction = Direction.DROITE
+				elif direction == "B":
+					direction = Direction.BAS
+				elif direction == "H":
+					direction = Direction.HAUT
+				else:
+					direction = Direction.GAUCHE
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
+		return direction, x, y, z
 
-		# Placement des sous-marins
-		for i in range(2):
-			# Les sous-marins sont ajoutés dans la mer du joueur
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+	def demandeImpact(self):
 
-			# Attribution des positions des sous-marins du joueur
-			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
-				Mer.affichagePlateauVide(1, 2, Back.GREEN)
-				for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
-					for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
-						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
-				# Placement des sous-marins
-				posXY(1, 24)
-				self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, j + 1, 1), Direction.DROITE)
-				input()
+		x, y, z = -1, -1, -1
+		print("Entrez l'emplacement de votre sous-marin " + str(j + 1) + " :")
+		while not 0 < x < Partie.dimensionsMers.getX() + 1:
+			try:
+				x = int(input("  La COLONNE de votre impact = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
-					for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
-						for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
-							x, y = g.emplacementCoordonnee()
-							Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
-				cls()
+		while not 0 < y < Partie.dimensionsMers.getY() + 1:
+			try:
+				y = int(input("  La LIGNE de votre impact = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-		# TODO bug de superposition des mers au niveau de l'affichage
+		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
+			try:
+				z = int(input("  La PROFONDEUR de votre impact = "))
+			except:
+				print("vous avez fait une erreur, veillez recommencer")
 
-		cls()
-		posXY(1, 1)
-		print("La partie peut ")
-		print("C'est à " + self.__joueurs[0].getNom() + " de commencer")
-		input()
-		cls()
-
+		return x, y, z
 	# def saugerde(self...):
 	# def savegarde(self...)
