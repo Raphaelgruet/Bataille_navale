@@ -7,6 +7,7 @@ from SousMarin import SousMarin
 from Direction import Direction
 
 
+# Class Partie
 class Partie:
 
 	__joueurs = [None, None]
@@ -75,37 +76,35 @@ class Partie:
 
 		# choix couleur
 		self.__joueurs[0].choixCouleur()
-		if self.__joueurs[0].getCouleur() == "B":
-			self.__joueurs[1].setCouleur("R")
+		if self.__joueurs[0].getCouleur() == Back.BLUE:
+			self.__joueurs[1].setCouleur(Back.RED)
 		else:
-			self.__joueurs[1].setCouleur("B")
-		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + ",", self.__joueurs[1],
-			  "aura donc la couleur", self.__joueurs[1].getCouleur())
+			self.__joueurs[1].setCouleur(Back.BLUE)
+		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
+			  self.__joueurs[1],
+			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
 		input()
 		cls()
 
 		# Placement des sous-marins
 		for i in range(2):
-			if self.__joueurs[i].getCouleur() == "B":
-				couleur = Back.BLUE
-			else:
-				couleur = Back.RED
 			# Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))'''
+
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
-				if j != 0:
-					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
+				for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
+					for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
 						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, couleur)
+						Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
 				posXY(1, 24)
 
 				# Placement des sous-marins
-				print(couleur, self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
+				print(self.__joueurs[i].getCouleur(), self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
 				placer = False
 				while not placer:
 					try:
@@ -117,9 +116,10 @@ class Partie:
 						print(e)
 
 				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
-					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
-						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, couleur)
+					for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
+						for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
+							x, y = g.emplacementCoordonnee()
+							Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
 				cls()
 
 		# TODO bug de superposition des mers au niveau de l'affichage
@@ -195,60 +195,68 @@ class Partie:
 		return None
 
 	def test(self):
-		for i in range(2):
-			self.__joueurs[i] = Joueur("b")  # Creation des joueurs à partir du nom entré dans le terminal
-		self.__joueurs[0].setCouleur("B")
-		if self.__joueurs[0].getCouleur() == "B":
-			self.__joueurs[1].setCouleur("R")
-		else:
-			self.__joueurs[1].setCouleur("B")
-		# placement des sous-marins
+		cls()
+		Mer.affichagePlateauVide(1, 2, Back.GREEN)
+		posXY(1, 24)
+		print("boujour, vous voici sur le jeu de bateille navale ")
+		input("appuyer sur entrer pour commencer la partie")
+		cls()
+
+		# Creation des joueurs
+
+		self.__joueurs[1] = Joueur("b")
+		self.__joueurs[0] = Joueur("c")  # Creation des joueurs à partir du nom entré dans le terminal
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
+			  self.__joueurs[1].getNom().upper())
+		print("Bonne bataille !")
+		input()
+		cls()
+
+		# choix couleur
+
+		self.__joueurs[0].setCouleur(Back.RED)
+		self.__joueurs[1].setCouleur(Back.BLUE)
+		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
+			  self.__joueurs[1],
+			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
+		input()
+		cls()
+
+		# Placement des sous-marins
 		for i in range(2):
 			# Les sous-marins sont ajoutés dans la mer du joueur
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
-				couleur = self.__joueurs[i].couleur()
-				cls()
 				Mer.affichagePlateauVide(1, 2, Back.GREEN)
+				for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
+					for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
+						x, y = g.emplacementCoordonnee()
+						Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
 				# Placement des sous-marins
-				if j != 0:
-					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
-						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, couleur)
 				posXY(1, 24)
-				print(couleur, self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
-				if i == 1:
-					self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 1, 1), Direction.DROITE)
-				else:
-					self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, 2, 1), Direction.DROITE)
+				self.__joueurs[i].getMer().getSousMarins()[j].placer(Coordonnee(1, j + 1, 1), Direction.DROITE)
+				input()
+
 				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
-					for g in self.__joueurs[i].getMer().getSousMarins()[j].getCoords().keys():
-						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, couleur)
-				input()
+					for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
+						for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
+							x, y = g.emplacementCoordonnee()
+							Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
 				cls()
+
+		# TODO bug de superposition des mers au niveau de l'affichage
+
+		cls()
 		posXY(1, 1)
-		print("nous pouvons commencer")
-		gagne = False
-		while not gagne:
-			for i in range(2):
-				couleur0, couleur1 = self.__joueurs[i].couleur()
-				print(couleur, "au joueur " + self.__joueurs[0].getNom() + " de jouer")
-				input()
-				cls()
-
-				Mer.affichagePlateauVide(1, 2, couleur1)
-				for g in self.__joueurs[i].getMer().getImpacts():  # la veux les differents impact mis par un joueur
-					# je veux une verification que les coordonnes ne sont pas celle d'un sous marin qui donnera le couleur (car une couleur = un etat de la case)
-					# regarder autour et les marquers
-
-					x, y = g.emplacementCoordonnee()  # la je les transforme en position pour le terminale cdm (recupere zyxet revoie xy)
-					self.__joueurs[i].getMer().affichagePion(x, y, couleur)  # et la je les affiche selon la couleur
-				posXY(1, 24)
-				direction, x, y, z = Partie.demandeEmplacement(self, j)
-				coord = Coordonnee(x, y, z)
-			# faire l'ajout des impact dans la varialble impact()
+		print("La partie peut ")
+		print("C'est à " + self.__joueurs[0].getNom() + " de commencer")
+		input()
+		cls()
 
 	# def saugerde(self...):
 	# def savegarde(self...)
