@@ -59,10 +59,10 @@ class Partie:
 
 	def lancementPartie(self):
 
-		cls()
+		'''cls()
 		Mer.affichagePlateauVide(1, 2, Back.GREEN)
-		print("boujour, vous voici sur le jeu de bateille navale ")
-		input("appuyer sur entrer pour commencer la partie")
+		print("Bonjour, vous voici sur le jeu de bataille navale")
+		input("Appuyer sur entrer pour commencer la partie")
 		cls()
 
 		# Creation des joueurs
@@ -81,7 +81,7 @@ class Partie:
 			self.__joueurs[1].setCouleur(Back.BLUE)
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
 			  self.__joueurs[1], "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
-		input()
+		input()'''
 
 		# Placement des sous-marins
 		for i in range(2):
@@ -111,36 +111,31 @@ class Partie:
 					self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
 			input()
 
-		# TODO bug de superposition des mers au niveau de l'affichage
-
 		cls()
 		posXY(1, 1)
-		print("La partie peut ")
+		print("La partie commence")
 		print("C'est à " + self.__joueurs[0].getNom() + " de commencer")
 		input()
-		cls()
 
 		# Commencement de la partie
 		while True:
 			for i in range(2):
 
+				cls()
 				#Affichage
 				if self.__joueurs[i].getCouleur() == "B":
 					couleur = Back.RED
+					couleurPion = Back.BLUE
 				else:
 					couleur = Back.BLUE
-				Mer.affichagePlateauVide(1, 2, couleur)
-				for g in self.__joueurs[i].getMer().getImpacts():  # la veux les differents positions du sous marin
-					x, y = g.emplacementCoordonnee()  # la je les transforme en position pour le terminale cdm
-					self.__joueurs[i].getMer().affichagePion(x, y, couleur)  # et la je les affiche
-				posXY(1, 24)
+					couleurPion = Back.RED
+				self.__joueurs[i].getMer().affichage(couleur, couleurPion, False)
 
 				#Detection coordonnées + impact
 				direction, x, y, z = Partie.demandeEmplacement(self, j)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().impact(coord)
 				input()
-				cls()
 
 				# Détection victoire
 				gagnant = self.testVictoire()
