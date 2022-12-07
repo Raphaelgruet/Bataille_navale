@@ -82,7 +82,6 @@ class Partie:
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
 			  self.__joueurs[1], "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
 		input()
-		cls()
 
 		# Placement des sous-marins
 		for i in range(2):
@@ -94,6 +93,7 @@ class Partie:
 
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
+				cls()
 				self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
 				# Placement des sous-marins
 				print(self.__joueurs[i].getCouleur(), self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
@@ -109,8 +109,6 @@ class Partie:
 
 				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
 					self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
-					input()
-				cls()
 			input()
 
 		# TODO bug de superposition des mers au niveau de l'affichage
