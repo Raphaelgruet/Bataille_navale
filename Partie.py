@@ -39,7 +39,7 @@ class Partie:
 
 		# choix couleur
 
-		self.__joueurs[0].setCouleur(Back.RED)
+		self.__joueurs[0].setCouleur(Back.YELLOW)
 		self.__joueurs[1].setCouleur(Back.BLUE)
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
 			  self.__joueurs[1],
@@ -65,7 +65,7 @@ class Partie:
 		# choix couleur
 		self.__joueurs[0].choixCouleur()
 		if self.__joueurs[0].getCouleur() == Back.BLUE:
-			self.__joueurs[1].setCouleur(Back.RED)
+			self.__joueurs[1].setCouleur(Back.YELLOW)
 		else:
 			self.__joueurs[1].setCouleur(Back.BLUE)
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
@@ -89,9 +89,11 @@ class Partie:
 				placer = False
 				while not placer:
 					try:
-						direction, x, y, z = Partie.demandeEmplacement(self, j)
-						coord = Coordonnee(x, y, z)
-						self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
+						#direction, x, y, z = Partie.demandeEmplacement(self, j)
+						#coord = Coordonnee(x, y, z)
+						coord = Coordonnee(1, j+1, 1)
+						#self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
+						self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, Direction.DROITE)
 						placer = True
 					except Exception as e:
 						print(e)
@@ -113,11 +115,11 @@ class Partie:
 				cls()
 				#Affichage
 				if self.__joueurs[i].getCouleur() == "B":
-					couleur = Back.RED
+					couleur = Back.YELLOW
 					couleurPion = Back.BLUE
 				else:
 					couleur = Back.BLUE
-					couleurPion = Back.RED
+					couleurPion = Back.YELLOW
 				self.__joueurs[i].getMer().affichage(couleur, couleurPion, False)
 
 				#Detection coordonnées + impact
@@ -208,7 +210,7 @@ class Partie:
 	def demandeImpact(self):
 
 		x, y, z = -1, -1, -1
-		print("Entrez l'emplacement de votre sous-marin " + str(j + 1) + " :")
+		print("Entrez l'emplacement de votre sous-marin " + str(1) + " :")
 		while not 0 < x < Partie.dimensionsMers.getX() + 1:
 			try:
 				x = int(input("  La COLONNE de votre impact = "))
