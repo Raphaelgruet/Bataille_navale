@@ -61,7 +61,6 @@ class Partie:
 
 		cls()
 		Mer.affichagePlateauVide(1, 2, Back.GREEN)
-		posXY(1, 24)
 		print("boujour, vous voici sur le jeu de bateille navale ")
 		input("appuyer sur entrer pour commencer la partie")
 		cls()
@@ -81,8 +80,7 @@ class Partie:
 		else:
 			self.__joueurs[1].setCouleur(Back.BLUE)
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
-			  self.__joueurs[1],
-			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
+			  self.__joueurs[1], "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
 		input()
 		cls()
 
@@ -96,13 +94,7 @@ class Partie:
 
 			# Attribution des positions des sous-marins du joueur
 			for j in range(len(self.__joueurs[i].getMer().getSousMarins())):
-				Mer.affichagePlateauVide(1, 2, Back.GREEN)
-				for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
-					for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
-						x, y = g.emplacementCoordonnee()
-						Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
-				posXY(1, 24)
-
+				self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
 				# Placement des sous-marins
 				print(self.__joueurs[i].getCouleur(), self.__joueurs[i], "place ses sous-marins", Style.RESET_ALL)
 				placer = False
@@ -116,10 +108,8 @@ class Partie:
 						print(e)
 
 				if j == len(self.__joueurs[i].getMer().getSousMarins()) - 1:
-					for o in range(len(self.__joueurs[i].getMer().getSousMarins())):
-						for g in self.__joueurs[i].getMer().getSousMarins()[o].getCoords().keys():
-							x, y = g.emplacementCoordonnee()
-							Mer.affichagePion(x, y, self.__joueurs[i].getCouleur())
+					self.__joueurs[i].getMer().affichage(Back.GREEN, self.__joueurs[i].getCouleur())
+					input()
 				cls()
 			input()
 

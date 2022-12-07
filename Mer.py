@@ -17,7 +17,14 @@ class Mer:
 	def __init__(self):
 		self.__sousMarins = []
 		self.__impacts = []
-
+	def affichage(self,couleurPlateau, couleurPion):
+		cls()
+		Mer.affichagePlateauVide(1, 2, couleurPlateau)
+		for o in range(len(self.__sousMarins)):
+			for i in self.__sousMarins[o].getCoords().keys():
+				x, y = i.emplacementCoordonnee()
+				Mer.affichagePion(x, y, couleurPion)
+		posXY(1, 24)
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarins.append(sousmarin)
 		sousmarin.setMer(self)
@@ -39,7 +46,7 @@ class Mer:
 			posXY(j+x,y+hCase)
 			print("   ")
 
-	def affichagePlateauVide(x, y, couleur):
+	def affichagePlateauVide( x, y, couleur):
 		hCase = 3
 		lCase = 5
 
@@ -56,6 +63,7 @@ class Mer:
 				for j in range(10):
 					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
 			print(Style.RESET_ALL)
+			posXY(1, 24)
 
 	def impact(self, coordonneImpact):
 		# Fonction qui ajoute les impacts dans la liste d'impacts et change l'état des coordonnées des sous-marins
