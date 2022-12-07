@@ -210,7 +210,7 @@ class Partie:
 	def demandeImpact(self):
 
 		x, y, z = -1, -1, -1
-		print("Entrez l'emplacement de votre sous-marin " + str(1) + " :")
+		print("Entrez les coordonnées de votre impact :")
 		while not 0 < x < Partie.dimensionsMers.getX() + 1:
 			try:
 				x = int(input("  La COLONNE de votre impact = "))
@@ -230,5 +230,6 @@ class Partie:
 				print("vous avez fait une erreur, veillez recommencer")
 
 		return x, y, z
+
 	# def saugerde(self...):
 	# def savegarde(self...)

@@ -30,9 +30,9 @@ class Mer:
 		else:
 			couleur = None
 			valeurEmplacement=None
-			for o in range(len(self.__impacts)):
-				x, y = o.emplacementCoordonnee()
-				couleur=BLUE
+			for impact in self.__impacts:
+				x, y = impact.emplacementCoordonnee()
+				couleur = Back.BLUE
 				Mer.affichagePion(x, y, couleur)
 			for o in range(len(self.__sousMarins)):
 				for i in self.__sousMarins[o].getCoords().keys():
@@ -93,12 +93,17 @@ class Mer:
 		# en fonction la position de l'impact.
 		# TODO etat de position "en vue"
 
-		if 0 < coordonneImpact.x <= self.__dimentionX and 0 < coordonneImpact.x <= self.__dimentionY and 0 < coordonneImpact.x <= self.__dimentionZ:
+		if 0 < coordonneImpact.getX() <= self.__dimentionX and 0 < coordonneImpact.getY() <= self.__dimentionY and 0 < coordonneImpact.getZ() <= self.__dimentionZ:
 			if coordonneImpact not in self.__impacts:
 				self.__impacts.append(coordonneImpact)
 				for sousMarin in self.__sousMarins:
 					nbrTouche = 0
 					for coord in sousMarin.getCoords():
+						if(((coord.getX() == coordonneImpact.getX()-1 or coord.getX() == coordonneImpact.getX()+1) and coord.getY() == coordonneImpact.getY() and coord.getZ() == coordonneImpact.getZ()) or
+							(coord.getX() == coordonneImpact.getX() and (coord.getY() == coordonneImpact.getY()-1 or coord.getY() == coordonneImpact.getY()+1) and coord.getZ() == coordonneImpact.getZ()) or
+							(coord.getX() == coordonneImpact.getX() and coord.getY() == coordonneImpact.getY() and (coord.getZ() == coordonneImpact.getZ()-1 or coord.getZ() == coordonneImpact.getZ()+1))):
+							sousMarin.getCoords()[coord] = 'v'
+							print("SOUS-MARIN EN VU !")
 						if coord == coordonneImpact:
 							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
 								sousMarin.getCoords()[coord] = 't'
