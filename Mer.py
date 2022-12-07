@@ -1,6 +1,7 @@
 from colorama import Fore, Style, Back
 from Outils import posXY, cls
 
+# Class Mer
 class Mer:
 
 	__sousMarins = []
