@@ -1,7 +1,7 @@
 from Coordonnee import Coordonnee
 from Direction import Direction
 
-# Class SousMarin
+# Class de SousMarin
 class SousMarin:
 
 	# o = non vu

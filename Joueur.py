@@ -6,11 +6,11 @@ from Outils import cls
 class Joueur:
 	__mer = None
 	__nom = ""
-	__couleur = ""
+	__couleur = None
 
 	def __init__(self, nom):
 		self.__nom = nom
-		self.__couleur = ""
+		self.__couleur = None
 		self.__mer = Mer()
 
 	def __str__(self):
@@ -46,15 +46,12 @@ class Joueur:
 		while not couleurChoisi:
 			print(Fore.GREEN)
 			couleur = input(self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
-			if couleur == "B" or couleur == "R":
-				self.__couleur = couleur
+			if couleur == "B":
+				self.__couleur = Back.BLUE
+				print(Style.RESET_ALL)
+				couleurChoisi = True
+			if couleur == "R":
+				self.__couleur = Back.RED
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()
-
-	def couleur(self):
-
-		if self.__couleur == "B":
-			return Back.BLUE, Back.RED  # couleur du joueur 1 puis couleur joueur2
-		else:
-			return Back.RED, Back.BLUE

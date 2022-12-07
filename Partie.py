@@ -68,8 +68,7 @@ class Partie:
 		# Creation des joueurs
 		for i in range(2):
 			self.__joueurs[i] = Joueur(input("Le joueur " + str(i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
-		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
-			  self.__joueurs[1].getNom().upper())
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
 		print("Bonne bataille !")
 		input()
 		cls()
@@ -123,7 +122,7 @@ class Partie:
 						Mer.affichagePion(x, y, couleur)
 				cls()
 
-			#TODO bug de superposition des mers au niveau de l'affichage
+		# TODO bug de superposition des mers au niveau de l'affichage
 
 		cls()
 		posXY(1, 1)

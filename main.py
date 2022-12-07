@@ -1,6 +1,7 @@
 from Partie import Partie
 from colorama import init
 
+# Fichier main
 
 if __name__ == '__main__':
 	init()
