@@ -112,15 +112,16 @@ class Mer:
 						print("COULÉ !")
 						for coord in sousMarin.getCoords():
 							sousMarin.getCoords()[coord] = 'c'
-				for sousMarin in self.__sousMarins:
-					if not touche:
+				if not touche:
+					for sousMarin in self.__sousMarins:
 						for coord in sousMarin.getCoords():
-							if (sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't' and
-									((coord.getX() == coordonneImpact.getX() - 1 or coord.getX() == coordonneImpact.getX() + 1) and coord.getY() == coordonneImpact.getY() and coord.getZ() == coordonneImpact.getZ()) or
+							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
+								if(((coord.getX() == coordonneImpact.getX() - 1 or coord.getX() == coordonneImpact.getX() + 1) and coord.getY() == coordonneImpact.getY() and coord.getZ() == coordonneImpact.getZ()) or
 									(coord.getX() == coordonneImpact.getX() and (coord.getY() == coordonneImpact.getY() - 1 or coord.getY() == coordonneImpact.getY() + 1) and coord.getZ() == coordonneImpact.getZ()) or
 									(coord.getX() == coordonneImpact.getX() and coord.getY() == coordonneImpact.getY() and (coord.getZ() == coordonneImpact.getZ() - 1 or coord.getZ() == coordonneImpact.getZ() + 1))):
-								sousMarin.getCoords()[coord] = 'v'
-								print("SOUS-MARIN EN VU !")
+									sousMarin.getCoords()[coord] = 'v'
+									print("SOUS-MARIN EN VU !")
+									input()
 			return True
 		return False
 
