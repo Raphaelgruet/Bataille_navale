@@ -1,3 +1,7 @@
+import json
+import os
+
+import yaml
 from Joueur import Joueur
 from Outils import cls, posXY
 from Mer import Mer
@@ -5,17 +9,18 @@ from colorama import Fore, Style, Back
 from Coordonnee import Coordonnee
 from SousMarin import SousMarin
 from Direction import Direction
-
+from datetime import datetime
 
 # Class Partie
 class Partie:
 
 	__joueurs = [None, None]
+	__id = "partie_" + datetime.now().strftime("%H_%M_%S")
 	__temps = 0
 	dimensionsMers = Coordonnee(10, 5, 3)
 
 	def __init__(self):
-		Partie.lancementPartie(self)
+		self.lancementPartie()
 
 	def lancementPartie(self):
 
@@ -101,6 +106,7 @@ class Partie:
 					self.__joueurs[i].getMer().affichage(Back.WHITE, self.__joueurs[i].getCouleur(), True)
 			input()
 
+		self.sauvegarder()
 		cls()
 		posXY(1, 1)
 		print("La partie commence")
@@ -202,5 +208,20 @@ class Partie:
 
 		return x, y, z
 
-	# def saugerde(self...):
-	# def savegarde(self...)
+	def sauvegarder(self):
+		absolute_path = os.path.dirname(__file__)
+		file = open(absolute_path + "/saves/" + self.__id, "w")
+		data = {}
+
+		for i in range(2):
+			sousMarins = {}
+			for sousMarin in self.__joueurs[i].getMer().getSousMarins():
+				coords = {}
+				for coord in sousMarin.getCoords():
+					coords[str(coord)] = sousMarin.getCoords()[coord]
+				sousMarins["sousMarin_" + str(sousMarin)] = coords
+			data["joueur_" + str(i)] = {"nom":self.__joueurs[i].getNom(),"couleur":self.__joueurs[i].getCouleur(),"sousMarins":sousMarins}
+		yaml.dump(data, file)
+
+	def charger(self):
+		pass
