@@ -17,6 +17,7 @@ class Partie:
 	__joueurs = [None, None]
 	__id = "partie_" + datetime.now().strftime("%H_%M_%S")
 	__temps = 0
+	tour = 0
 	dimensionsMers = Coordonnee(10, 5, 3)
 
 	def __init__(self):
@@ -324,6 +325,7 @@ class Partie:
 		file = open(absolute_path + "/saves/" + self.__id, "w")
 		data = {}
 
+		data["tour"] = self.tour
 		for i in range(2):
 			sousMarins = {}
 			for sousMarin in self.__joueurs[i].getMer().getSousMarins():
