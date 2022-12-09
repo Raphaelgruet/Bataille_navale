@@ -7,6 +7,7 @@ class Mer:
 
 	__sousMarins = []
 	__impacts = []
+	__impactsType = []
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
@@ -29,63 +30,120 @@ class Mer:
 					x, y = i.emplacementCoordonnee()
 					Mer.affichagePion(x, y, couleurPion)
 		else:
-			couleur = None
-			valeurEmplacement=None
-			for impact in self.__impacts:
-				x, y = impact.emplacementCoordonnee()
-				couleur = Back.BLUE
-				Mer.affichagePion(x, y, couleur)
+			Mer.affichageImpact(self, 0, modeAffichage)
+		Mer.legende(self)
+		posXY(1, 24)
+
+	def affichageEnSolo(self, couleurPlateau, modeAffichage):
+		if modeAffichage:
+			Mer.affichagePlateauVide(1, 2, couleurPlateau)
 			for o in range(len(self.__sousMarins)):
 				for i in self.__sousMarins[o].getCoords().keys():
-					valeurEmplacement = self.__sousMarins[o].getCoords()[i]
-					if valeurEmplacement == "o":
-						couleur = Back.BLACK
-					elif valeurEmplacement == "v":
-						couleur = Back.CYAN
-					elif valeurEmplacement == "t":
-						couleur = Back.RED
-					else:
-						couleur = Back.MAGENTA
 					x, y = i.emplacementCoordonnee()
-					Mer.affichagePion(x, y, couleur)
-		posXY(1, 24)
+					Mer.affichagePion(x, y, couleurPlateau)
+			couleur = None
+			valeurEmplacement = None
+			Mer.affichageImpact(self,0, modeAffichage)
+		else:
+			Mer.affichagePlateauVide(1, 22, couleurPlateau)
+			Mer.affichageImpact(self, 20, modeAffichage)
+		Mer.legende(self)
+		posXY(1, 42)
+
+	def affichageImpact(self, posY, modeAffichage):
+		couleur = None
+		valeurEmplacement = None
+		for impact in self.__impacts:
+			x, y = impact.emplacementCoordonnee()
+			couleur = Back.BLUE
+			Mer.affichagePion(x, y+posY, couleur)
+		if self.__impactsType==[]:
+			for o in range(len(self.__sousMarins)):
+				for i in self.__sousMarins[o].getCoords().keys():
+					couleur = self.couleurImpact(self.__sousMarins[o].getCoords()[i], modeAffichage)
+					x, y = i.emplacementCoordonnee()
+					Mer.affichagePion(x, y+posY, couleur)
+		else:
+			for i in range(len(self.__impactsType)):
+				couleur = self.couleurImpact(self.__impactsType[i], modeAffichage)
+				x, y = self.__impacts[i].emplacementCoordonnee()
+				Mer.affichagePion(x, y + posY, couleur)
+
+	def couleurImpact(self,valeurEmplacement, modeAffichage):
+		if valeurEmplacement == "o":
+			if not modeAffichage:
+				return Back.BLACK
+			else:
+				return Back.WHITE
+		elif valeurEmplacement == "v":
+			return Back.CYAN
+		elif valeurEmplacement == "t":
+			return Back.RED
+		else:
+			return Back.LIGHTRED_EX
+
+	def legende(self):
+		posXY(180, 6)
+		print(Back.BLUE, "  ", Style.RESET_ALL, " veut dire que rien n'a ")
+		posXY(180, 7)
+		print("      ete touche ")
+		posXY(180, 8)
+		print(Back.CYAN, "  ", Style.RESET_ALL, " annonce la vue d'un ")
+		posXY(180, 9)
+		print("      sous marin")
+		posXY(180, 10)
+		print(Back.RED, "  ", Style.RESET_ALL, " annonce que le sous marin")
+		posXY(180, 11)
+		print("      est touche")
+		posXY(180, 12)
+		print(Back.LIGHTRED_EX, "  ", Style.RESET_ALL, " annonce que le sous marin" )
+		posXY(180, 13)
+		print("      est coule")
+
 	def ajouterSousMarin(self, sousmarin):
 		self.__sousMarins.append(sousmarin)
 		sousmarin.setMer(self)
 
-	def affichageCaseVide(x, y):
+	def affichagePion(x, y, couleur):
+		print(couleur)
+		posXY(x, y)
+		print("   ")
+		posXY(x, y + 1)  # a tester
+		print("   ")
+		print(Style.RESET_ALL)
 
+	def affichageCaseVide(x, y):
 		hCase = 3
 		lCase = 5
-		for j in range (hCase):
+		for j in range(hCase):
 			posXY(x, j + y)
 			print("  ")
-		for j in range (lCase):
-			posXY(j+x,y)
+		for j in range(lCase):
+			posXY(j + x, y)
 			print(" ")
 		for j in range(hCase):
-			posXY(x+lCase, j + y)
+			posXY(x + lCase, j + y)
 			print("  ")
-		for j in range (lCase):
-			posXY(j+x,y+hCase)
+		for j in range(lCase):
+			posXY(j + x, y + hCase)
 			print("   ")
 
-	def affichagePlateauVide( x, y, couleur):
+	def affichagePlateauVide(x, y, couleur):
 		hCase = 3
 		lCase = 5
 
 		for k in range(3):
-			posXY(7 + k * 60, 1)
-			print("profondeur:", k * 100+100)
-			posXY(6 + k * 60, 4)
+			posXY(7 + k * 60, y)
+			print("profondeur:", k * 100 + 100)
+			posXY(6 + k * 60, y + 2)
 			print("   1    2    3    4    5    6    7    8    9    10  ")
-			for i in range(1,6):
-				posXY(4 + k * 60, 4+i*3)
-				print (i)
+			for i in range(1, 6):
+				posXY(4 + k * 60, y + 2 + i * 3)
+				print(i)
 			print(couleur)
 			for i in range(5):
 				for j in range(10):
-					Mer.affichageCaseVide(k*60+x+lCase*(j+1),(y+hCase*(i+1)))
+					Mer.affichageCaseVide(k * 60 + x + lCase * (j + 1), (y + hCase * (i + 1)))
 			print(Style.RESET_ALL)
 			posXY(1, 24)
 
@@ -143,10 +201,7 @@ class Mer:
 		return self.__sousMarins
 	def getImpacts(self):
 		return self.__impacts
-	def affichagePion(x, y, couleur):
-		print(couleur)
-		posXY(x, y)
-		print("   ")
-		posXY(x, y + 1)  # a tester
-		print("   ")
-		print(Style.RESET_ALL)
+	def getImpactsType(self):
+		return self.__impactsType
+	def setImpactsType(self, value):
+		self.__impactsType.append(value)

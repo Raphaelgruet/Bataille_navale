@@ -44,14 +44,16 @@ class Joueur:
 	def choixCouleur(self):  # permet de savoir quelle couleur va choisir le premier joueur
 		couleurChoisi = False
 		while not couleurChoisi:
-			print(Fore.CYAN)
-			couleur = input(self.getNom() + " choisi sa couleur entre, \"R\" pour rouge ou \"B\" pour bleu ?").upper()
-			if couleur == "B":
+			print(Fore.LIGHTCYAN_EX)
+			print(self.getNom() + " choisi sa couleur entre, ", Fore.LIGHTGREEN_EX, "\"V\" pour vert",
+				  Fore.LIGHTCYAN_EX, " ou ", Fore.LIGHTYELLOW_EX, "\"J\" pour jaune ?")
+			couleur = input().upper()
+			if couleur == "V":
 				self.__couleur = Back.GREEN
 				print(Style.RESET_ALL)
 				couleurChoisi = True
-			if couleur == "R":
-				self.__couleur = Back.RED
+			if couleur == "J":
+				self.__couleur = Back.YELLOW
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()

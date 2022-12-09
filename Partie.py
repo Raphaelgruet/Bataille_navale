@@ -21,6 +21,7 @@ class Partie:
 
 	def __init__(self):
 		self.lancementPartie()
+		#self.partirSur2Ecran()
 
 	def lancementPartie(self):
 
@@ -122,7 +123,7 @@ class Partie:
 			for i in range(2):
 				self.__joueurs[i].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(), False)
 				#Detection coordonnées + impact
-				x, y, z = Partie.demandeImpact(self)
+				x, y, z = self.demandeImpact(20)
 				coord = Coordonnee(x, y, z)
 				self.__joueurs[i].getMer().impact(coord)
 				self.__joueurs[i].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(), False)
@@ -137,6 +138,100 @@ class Partie:
 					print("  VICTOIRE de " + str(gagnant) + " !\n")
 					print("#####################################")
 					return True
+
+	def partirSur2Ecran(self):
+		cls()
+		Mer.affichagePlateauVide(1, 2, Back.WHITE)
+		print("Bonjour, vous voici sur le jeu de bataille navale")
+		input("Appuyer sur entrer pour commencer la partie sur deux ecrans differents")
+		cls()
+		# Creation des joueurs
+		for i in range(2):
+			self.__joueurs[i] = Joueur(input("Le joueur " + str(i + 1) + " entre son prénom :"))  # Creation des joueurs à partir du nom entré dans le terminal
+		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre", self.__joueurs[1].getNom().upper())
+		print("Bonne bataille !")
+		input()
+		cls()
+
+		# choix couleur
+		self.__joueurs[0].choixCouleur()
+		if self.__joueurs[0].getCouleur() == Back.GREEN:
+			self.__joueurs[1].setCouleur(Back.YELLOW)
+		else:
+			self.__joueurs[1].setCouleur(Back.GREEN)
+		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL)
+		input()
+
+		# Placement des sous-marin
+		# Les sous-marins sont ajoutés dans la mer du joueur
+		self.__joueurs[0].getMer().ajouterSousMarin(SousMarin(4))
+		self.__joueurs[0].getMer().ajouterSousMarin(SousMarin(3))
+		'''self.__joueurs[0].getMer().ajouterSousMarin(SousMarin(3))
+		self.__joueurs[0].getMer().ajouterSousMarin(SousMarin(2))'''
+		# Attribution des positions des sous-marins du joueur
+		for j in range(len(self.__joueurs[0].getMer().getSousMarins())):
+			cls()
+			self.__joueurs[0].getMer().affichage(Back.WHITE, self.__joueurs[0].getCouleur(), True)
+			# Placement des sous-marins
+			print(self.__joueurs[0].getCouleur(), self.__joueurs[0], "place ses sous-marins", Style.RESET_ALL)
+			placer = False
+			while not placer:
+				try:
+					# direction, x, y, z = Partie.demandeEmplacement(self, j)
+					# coord = Coordonnee(x, y, z)
+					coord = Coordonnee(1, j + 1, 1)
+					# self.__joueurs[0].getMer().getSousMarins()[j].placer(coord, direction)
+					self.__joueurs[0].getMer().getSousMarins()[j].placer(coord, Direction.DROITE)
+					placer = True
+				except Exception as e:
+					print(e)
+
+			if j == len(self.__joueurs[0].getMer().getSousMarins()) - 1:
+				self.__joueurs[0].getMer().affichage(Back.WHITE, self.__joueurs[0].getCouleur(), True)
+		input()
+
+		cls()
+		posXY(1, 1)
+		#qui commmence
+		print("La partie commence")
+		print("C'est à " + self.__joueurs[0].getNom() + " de commencer")
+		input()
+		cls()
+		# Commencement de la partie
+		while True:
+				self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
+				self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
+				posXY(1,41)
+				print(Fore.LIGHTBLUE_EX,"ou votre adversaire a t-il tire?")
+				x, y, z = Partie.demandeImpact(self,0)
+				coord = Coordonnee(x, y, z)
+				self.__joueurs[0].getMer().impact(coord)
+				posXY(1, 41)
+				print(Fore.LIGHTBLUE_EX, "ou avez vous tire?")
+				x, y, z = Partie.demandeImpact(self,0)
+				coord = Coordonnee(x, y, z)
+				print()
+				typeImpact=""
+				while not (typeImpact=="t" or typeImpact=="c" or typeImpact=="o" or typeImpact=="v") :
+					try:
+						posXY(1,46)
+						print("                                                                                                                                                                                                           ")
+						posXY(1, 46)
+						typeImpact = input("Entrez le resultat de votre impact (si vous avez touche, entrer :\"t\", si vous avous avez coule, entrer :\"c\", si vous avez vous un sous marin, entrer :\"v\", si vous avous avez rien eu, entrer :\"o\"").lower()
+					except:
+						print("vous avez fait une erreur, veillez recommencer")
+
+				self.__joueurs[1].getMer().impact(coord)#ca sera un  marquagede la couleur que je veux
+				self.__joueurs[1].getMer().setImpactsType(typeImpact)
+				# Détection defaite
+				if self.__joueurs[0].getPV() == 0:
+					print("#####################################\n")
+					print("#   VICTOIRE de votre Adversaire!   #\n")
+					print("#####################################")
+					return True
+				else:
+					input()
+					cls()
 
 	def testVictoire(self):
 		# Fonction qui retourne le joueur qui a gagné la partie dans le cas ou celle-ci est terminée,
@@ -184,28 +279,44 @@ class Partie:
 				print("vous avez fait une erreur, veillez recommencer")
 		return direction, x, y, z
 
-	def demandeImpact(self):
-
+	def demandeImpact(self,r):
+		print(Fore.LIGHTBLUE_EX)
+		posXY(1, 42-r)
+		print("                                                                                          ")
+		print("                                                                                          ")
+		print("                                                                                          ")
+		print("                                                                                          ")
+		print("                                                                                          ")
 		x, y, z = -1, -1, -1
+		posXY(1, 42-r)
 		print("Entrez les coordonnées de votre impact :")
 		while not 0 < x < Partie.dimensionsMers.getX() + 1:
 			try:
+				posXY(1, 43-r)
+				print("                                                                                          ")
+				posXY(1, 43-r)
 				x = int(input("  La COLONNE de votre impact = "))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
 		while not 0 < y < Partie.dimensionsMers.getY() + 1:
 			try:
+				posXY(1, 44-r)
+				print("                                                                                         ")
+				posXY(1, 44-r)
 				y = int(input("  La LIGNE de votre impact = "))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
 		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
 			try:
+				posXY(1, 45-r)
+				print("                                                                                         ")
+				posXY(1, 45-r)
 				z = int(input("  La PROFONDEUR de votre impact = "))
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
-
+		print(Style.RESET_ALL)
 		return x, y, z
 
 	def sauvegarder(self):
