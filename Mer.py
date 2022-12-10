@@ -40,7 +40,7 @@ class Mer:
 			for o in range(len(self.__sousMarins)):
 				for i in self.__sousMarins[o].getCoords().keys():
 					x, y = i.emplacementCoordonnee()
-					Mer.affichagePion(x, y, couleurPlateau)
+					Mer.affichagePion(x, y, Back.WHITE)
 			couleur = None
 			valeurEmplacement = None
 			Mer.affichageImpact(self,0, modeAffichage)
@@ -53,11 +53,11 @@ class Mer:
 	def affichageImpact(self, posY, modeAffichage):
 		couleur = None
 		valeurEmplacement = None
-		for impact in self.__impacts:
-			x, y = impact.emplacementCoordonnee()
-			couleur = Back.BLUE
-			Mer.affichagePion(x, y+posY, couleur)
 		if self.__impactsType==[]:
+			for impact in self.__impacts:
+				x, y = impact.emplacementCoordonnee()
+				couleur = Back.BLUE
+				Mer.affichagePion(x, y + posY, couleur)
 			for o in range(len(self.__sousMarins)):
 				for i in self.__sousMarins[o].getCoords().keys():
 					couleur = self.couleurImpact(self.__sousMarins[o].getCoords()[i], modeAffichage)

@@ -7,10 +7,12 @@ class Joueur:
 	__mer = None
 	__nom = ""
 	__couleur = None
+	__couleur2 = None
 
 	def __init__(self, nom):
 		self.__nom = nom
 		self.__couleur = None
+		self.__couleur2 = None
 		self.__mer = Mer()
 
 	def __str__(self):
@@ -38,6 +40,10 @@ class Joueur:
 	def getCouleur(self):
 		return self.__couleur
 
+	def getCouleur2(self):
+		return self.__couleur2
+	def setCouleur2(self, value):
+		self.__couleur2=value
 	def getMer(self):
 		return self.__mer
 
@@ -50,10 +56,12 @@ class Joueur:
 			couleur = input().upper()
 			if couleur == "V":
 				self.__couleur = Back.GREEN
+				self.__couleur2 = Fore.LIGHTGREEN_EX
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 			if couleur == "J":
 				self.__couleur = Back.YELLOW
+				self.__couleur2 = Fore.LIGHTYELLOW_EX
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()

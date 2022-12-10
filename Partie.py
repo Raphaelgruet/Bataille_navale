@@ -181,10 +181,13 @@ class Partie:
 		# choix couleur
 		self.__joueurs[0].choixCouleur()
 		if self.__joueurs[0].getCouleur() == Back.GREEN:
+
 			self.__joueurs[1].setCouleur(Back.YELLOW)
+			self.__joueurs[1].setCouleur2(Fore.LIGHTYELLOW_EX)
 		else:
 			self.__joueurs[1].setCouleur(Back.GREEN)
-		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL)
+			self.__joueurs[1].setCouleur2(Fore.LIGHTYELLOW_EX)
+		print(self.__joueurs[0], "a cho      isi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL)
 		input()
 
 		# Placement des sous-marin
@@ -202,7 +205,9 @@ class Partie:
 			placer = False
 			while not placer:
 				try:
+					print(self.__joueurs[0].getCouleur2())
 					# direction, x, y, z = Partie.demandeEmplacement(self, j)
+
 					# coord = Coordonnee(x, y, z)
 					coord = Coordonnee(1, j + 1, 1)
 					# self.__joueurs[0].getMer().getSousMarins()[j].placer(coord, direction)
@@ -212,6 +217,7 @@ class Partie:
 					print(e)
 
 			if j == len(self.__joueurs[0].getMer().getSousMarins()) - 1:
+				print(Style.RESET_ALL)
 				self.__joueurs[0].getMer().affichage(Back.WHITE, self.__joueurs[0].getCouleur(), True)
 		input()
 
@@ -331,7 +337,7 @@ class Partie:
 				posXY(1, 43 - r)
 				x = int(input("  La COLONNE de votre impact = "))
 			except:
-				print("vous avez fait une erreur, veillez recommencer")
+				print("\nvous avez fait une erreur, veillez recommencer")
 
 		while not 0 < y < Partie.dimensionsMers.getY() + 1:
 			try:
@@ -340,7 +346,8 @@ class Partie:
 				posXY(1, 44 - r)
 				y = int(input("  La LIGNE de votre impact = "))
 			except:
-				print("vous avez fait une erreur, veillez recommencer")
+				print("\nvous avez fait une erreur, veillez recommencer")
+				input()
 
 		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
 			try:
@@ -349,8 +356,8 @@ class Partie:
 				posXY(1, 45 - r)
 				z = int(input("  La PROFONDEUR de votre impact = "))
 			except:
-				print("vous avez fait une erreur, veillez recommencer")
-		print(Style.RESET_ALL)
+				print("\nvous avez fait une erreur, veillez recommencer")
+
 		return x, y, z
 
 	def sauvegarder(self):
