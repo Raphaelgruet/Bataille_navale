@@ -163,11 +163,11 @@ class Mer:
 							touche = True
 							if sousMarin.getCoords()[coord] != 'c' and sousMarin.getCoords()[coord] != 't':
 								sousMarin.getCoords()[coord] = 't'
-								print("TOUCHÉ !")
+								#print("TOUCHÉ !")
 						if sousMarin.getCoords()[coord] == 't':
 							nbrTouche += 1
 					if nbrTouche == sousMarin.getTaille():
-						print("COULÉ !")
+						#print("COULÉ !")
 						for coord in sousMarin.getCoords():
 							sousMarin.getCoords()[coord] = 'c'
 				if not touche:
@@ -178,8 +178,8 @@ class Mer:
 									(coord.getX() == coordonneImpact.getX() and (coord.getY() == coordonneImpact.getY() - 1 or coord.getY() == coordonneImpact.getY() + 1) and coord.getZ() == coordonneImpact.getZ()) or
 									(coord.getX() == coordonneImpact.getX() and coord.getY() == coordonneImpact.getY() and (coord.getZ() == coordonneImpact.getZ() - 1 or coord.getZ() == coordonneImpact.getZ() + 1))):
 									sousMarin.getCoords()[coord] = 'v'
-									print("SOUS-MARIN EN VU !")
-									input()
+									#print("SOUS-MARIN EN VU !")
+									#input()
 			return True
 		return False
 
@@ -201,6 +201,8 @@ class Mer:
 		return self.__sousMarins
 	def getImpacts(self):
 		return self.__impacts
+	def addImpact(self, coordonnee):
+		return self.__impacts.append(coordonnee)
 	def getImpactsType(self):
 		return self.__impactsType
 	def setImpactsType(self, value):

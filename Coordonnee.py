@@ -10,6 +10,11 @@ class Coordonnee:
 		self.__y = y
 		self.__z = z
 
+	def setWithString(self, coordonnee):
+		self.__x = int(coordonnee[0])
+		self.__y = int(coordonnee[1])
+		self.__z = int(coordonnee[2])
+
 	def __str__(self):
 		return str(self.__x) + str(self.__y) + str(self.__z)
 
