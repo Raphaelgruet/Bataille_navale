@@ -40,6 +40,7 @@ class SousMarin:
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
 			if coordonnee.getY() - self.__taille+1 > 0:
+				self.__coords.clear()
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX(), coordonnee.getY() - i, coordonnee.getZ())
 					self.__coords[coord] = 'o'
@@ -53,6 +54,7 @@ class SousMarin:
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
 			if coordonnee.getX() + self.__taille-1 <= self.__mer.getDimentionX():
+				self.__coords.clear()
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX() + i, coordonnee.getY(), coordonnee.getZ())
 					self.__coords[coord] = 'o'
@@ -66,6 +68,7 @@ class SousMarin:
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
 			if coordonnee.getY() + self.__taille-1 <= self.__mer.getDimentionY():
+				self.__coords.clear()
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX(), coordonnee.getY() + i, coordonnee.getZ())
 					self.__coords[coord] = 'o'
@@ -79,6 +82,7 @@ class SousMarin:
 							smCoord.getZ() == coordonnee.getZ()):
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
 			if coordonnee.getX() - self.__taille+1 > 0:
+				self.__coords.clear()
 				for i in range(self.__taille):
 					coord = Coordonnee(coordonnee.getX() - i, coordonnee.getY(), coordonnee.getZ())
 					self.__coords[coord] = 'o'

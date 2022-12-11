@@ -11,6 +11,8 @@ from SousMarin import SousMarin
 from Direction import Direction
 from datetime import datetime
 
+from vue.FenetreJoueur import FenetreJoueur
+
 
 # Class Partie
 class Partie:
@@ -23,7 +25,21 @@ class Partie:
 	def __init__(self):
 		#self.lancementPreparation()
 		#self.partirSur2Ecran()
-		self.charger("partie_17_37_06")
+		#self.charger("partie_17_37_06")
+		self.lancementGraphique()
+
+	def lancementGraphique(self):
+		fenetres = []
+		for i in range(2):
+			self.__joueurs[i] = Joueur("Joueur " + str(i+1))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
+			fenetre = FenetreJoueur(self.__joueurs[i])
+			fenetres.append(fenetre)
+		for fenetre in fenetres:
+			fenetre.mainloop()
 
 	def lancementPreparation(self):
 
@@ -31,8 +47,8 @@ class Partie:
 		cls()
 		Mer.affichagePlateauVide(1, 2, Back.WHITE)
 		posXY(1, 24)
-		print("boujour, vous voici sur le jeu de bataille navale ")
-		input("appuyer sur entrer pour commencer la partie")
+		print("---------- Bataille navale ----------")
+		input("appuyer sur entrer pour commencer la partie ...")
 		cls()
 
 		# Creation des joueurs
