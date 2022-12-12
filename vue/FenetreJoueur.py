@@ -19,6 +19,7 @@ class FenetreJoueur:
 		self.__sousMarinButtons = []
 		self.__pret = False
 		self.__jouable = False
+		self.__direction = Direction.DROITE
 
 		self.__fenetre = tkinter.Tk()
 		self.__fenetre.title("Bataille navale - " + joueur.getNom())
@@ -28,8 +29,10 @@ class FenetreJoueur:
 		self.__preparationFrame = tkinter.Frame(self.__fenetre)
 		self.__jeuFrame = tkinter.Frame(self.__fenetre)
 
-		self.__labelAction = tkinter.Label(self.__fenetre, text="Sélectionner vos sous-marins et placez les sur le plateau.")
-		self.__labelErreur = tkinter.Label(self.__fenetre, foreground="red")
+		self.__labelAction = tkinter.Label(self.__fenetre, text="Sélectionner vos sous-marins et placez les sur le plateau."
+																"\nUtilisez le bouton de direction pour faire pivoter les sous-marins."
+																"\nUne fois vos sous-marins placés, vous pouvez appuyer sur le bouton \"PRET\"")
+		self.__labelErreur = tkinter.Label(self.__fenetre, foreground=COLOR_ROUGE, font='bold')
 
 		self.__merFramePreparation = tkinter.Frame(self.__preparationFrame)
 		self.__merFrameJeu = tkinter.Frame(self.__jeuFrame)
@@ -37,6 +40,7 @@ class FenetreJoueur:
 		self.__nameLabel.insert(0, joueur.getNom())
 		self.__readyButton = tkinter.Button(self.__preparationFrame, text="PRET", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.interactionPret)
 		self.__sousMarinFrame = tkinter.Frame(self.__preparationFrame)
+		self.__directionButton = tkinter.Button(self.__sousMarinFrame, text="Direction [" + self.__direction.name + "]", width=20, relief="flat", bg=COLOR_GRIS_FONCE, fg=COLOR_GRIS, command=self.changementDirection)
 
 		self.__selectedSousMarin = None
 
@@ -65,11 +69,15 @@ class FenetreJoueur:
 			self.__sousMarinButtons.append(sousMarinButton)
 			sousMarinButton.pack(fill="both", pady=1, padx=10)
 
+		self.__directionButton.pack(pady=1, padx=10)
 		self.createButtonsPreparation()
 
 	def afficheJeu(self):
+		self.setJouable(False)
 		self.__preparationFrame.destroy()
 		self.__jeuFrame.pack(anchor="center", expand=1)
+		self.__labelAction.config(text="Chacun votre tour, vous pourrez sélectionner l'emplacement où vous voulez tirer."
+									   "\nLes couleurs des cases correspondent à : gris = non testé / bleu = dans l'eau / vert = radar / rouge = touché / violet = coulé")
 		self.createButtonsJeu()
 		frameProfondeurs = tkinter.Frame(self.__jeuFrame)
 		for i in range(3):
@@ -91,7 +99,7 @@ class FenetreJoueur:
 			self.__labelErreur.config(text="[!] Vous devez sélectionner un sous-marin !")
 			return
 		try:
-			self.__selectedSousMarin.placer(coordonnee, Direction.DROITE)
+			self.__selectedSousMarin.placer(coordonnee, self.__direction)
 			self.recolorPreparation()
 			self.__labelErreur.config(text="")
 			indexSousMarin = self.__joueur.getMer().getSousMarins().index(self.__selectedSousMarin)
@@ -100,9 +108,10 @@ class FenetreJoueur:
 			self.__labelErreur.config(text="[!] " + str(e))
 
 	def interactionCaseJeu(self, coordonnee):
-		print(self.__adversaire)
-		self.__adversaire.getMer().impact(coordonnee)
-		self.recolorJeu()
+		if self.__jouable is True:
+			self.__adversaire.getMer().impact(coordonnee)
+			self.recolorJeu()
+			self.setJouable(False)
 
 	def interactionPret(self):
 		for sousMarin in self.__joueur.getMer().getSousMarins():
@@ -137,6 +146,17 @@ class FenetreJoueur:
 					button.grid(row=y, column=x, padx=1, pady=1)
 					self.__buttons.append(button)
 
+	def changementDirection(self):
+		if self.__direction == Direction.DROITE:
+			self.__direction = Direction.BAS
+		elif self.__direction == Direction.BAS:
+			self.__direction = Direction.GAUCHE
+		elif self.__direction == Direction.GAUCHE:
+			self.__direction = Direction.HAUT
+		else:
+			self.__direction = Direction.DROITE
+		self.__directionButton.config(text="Direction [" + self.__direction.name + "]")
+
 	def recolorPreparation(self):
 		for button in self.__buttons:
 			button.config(bg=COLOR_GRIS)
@@ -165,3 +185,13 @@ class FenetreJoueur:
 
 	def getFenetre(self):
 		return self.__fenetre
+
+	def estJouable(self):
+		return self.__jouable
+
+	def setJouable(self, jouable):
+		self.__jouable = jouable
+		if not jouable:
+			self.__labelErreur.config(fg=COLOR_ROUGE, text=self.__adversaire.getNom() + " est en train de jouer, veuillez patienter ...")
+		else:
+			self.__labelErreur.config(fg=COLOR_BLEU, text="C'est à vous de jouer, sélectionnez une case.")

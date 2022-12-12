@@ -25,9 +25,9 @@ class Partie:
 	def __init__(self):
 		#self.lancementPreparation()
 		#self.partirSur2Ecran()
-		#self.charger("partie_17_37_06")
-		#self.lancementGraphique()
-		self.partirSur2Ecran()
+		#self.charger("partie_22_09_47")
+		self.lancementGraphique()
+		#self.partirSur2Ecran()
 
 	def lancementGraphique(self):
 		fenetres = []
@@ -48,11 +48,20 @@ class Partie:
 		while fenetres[0].estPret() == False or fenetres[1].estPret() == False:
 			fenetres[0].getFenetre().update()
 			fenetres[1].getFenetre().update()
+
 		for fenetre in fenetres:
 			fenetre.afficheJeu()
+
 		while not self.testVictoire():
-			fenetres[0].getFenetre().update()
-			fenetres[1].getFenetre().update()
+			fenetres[0].setJouable(True)
+			while fenetres[0].estJouable():
+				for fenetre in fenetres:
+					fenetre.getFenetre().update()
+			fenetres[1].setJouable(True)
+			while fenetres[1].estJouable():
+				for fenetre in fenetres:
+					fenetre.getFenetre().update()
+
 		gagnant = self.testVictoire()
 		print("#####################################\n")
 		print("  VICTOIRE de " + str(gagnant) + " !\n")
@@ -91,8 +100,6 @@ class Partie:
 			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
 		input()
 		cls()
-
-		self.lancementPartie()
 
 		'''
 		Mer.affichagePlateauVide(1, 2, Back.WHITE)
@@ -167,6 +174,8 @@ class Partie:
 			else:
 				self.__joueurs[i].setCouleur(Back.YELLOW)
 
+		self.lancementPartie()
+
 	def lancementPartie(self):
 
 		# Commencement de la partie
@@ -179,8 +188,7 @@ class Partie:
 			coord = Coordonnee(x, y, z)
 			self.__joueurs[i].getMer().impact(coord)
 			print(Style.RESET_ALL)
-			self.__joueurs[i].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(),
-												 False)
+			self.__joueurs[i].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(), False)
 
 			self.tour += 1
 			self.sauvegarder()
