@@ -18,6 +18,7 @@ class FenetreJoueur:
 		self.__buttons = []
 		self.__sousMarinButtons = []
 		self.__pret = False
+		self.__jouable = False
 
 		self.__fenetre = tkinter.Tk()
 		self.__fenetre.title("Bataille navale - " + joueur.getNom())
@@ -38,7 +39,6 @@ class FenetreJoueur:
 		self.__sousMarinFrame = tkinter.Frame(self.__preparationFrame)
 
 		self.__selectedSousMarin = None
-		#self.getButtonFromCoordonnee(Coordonnee(5, 4, 3)).config(bg=COLOR_ROUGE)
 
 		self.affichePreparation()
 
@@ -100,6 +100,7 @@ class FenetreJoueur:
 			self.__labelErreur.config(text="[!] " + str(e))
 
 	def interactionCaseJeu(self, coordonnee):
+		print(self.__adversaire)
 		self.__adversaire.getMer().impact(coordonnee)
 		self.recolorJeu()
 

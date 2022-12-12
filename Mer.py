@@ -150,7 +150,6 @@ class Mer:
 	def impact(self, coordonneImpact):
 		# Fonction qui ajoute les impacts dans la liste d'impacts et change l'état des coordonnées des sous-marins
 		# en fonction la position de l'impact.
-		# TODO etat de position "en vue"
 
 		if 0 < coordonneImpact.getX() <= self.__dimentionX and 0 < coordonneImpact.getY() <= self.__dimentionY and 0 < coordonneImpact.getZ() <= self.__dimentionZ:
 			if coordonneImpact not in self.__impacts:
@@ -182,8 +181,6 @@ class Mer:
 									#input()
 			return True
 		return False
-
-		# TODO bug de vu (reécriture sur une case touché ou coulé)
 
 	def getDimentionZ(self):
 		return self.__dimentionZ

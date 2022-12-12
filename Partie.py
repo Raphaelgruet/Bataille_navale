@@ -26,18 +26,25 @@ class Partie:
 		#self.lancementPreparation()
 		#self.partirSur2Ecran()
 		#self.charger("partie_17_37_06")
-		self.lancementGraphique()
+		#self.lancementGraphique()
+		self.partirSur2Ecran()
 
 	def lancementGraphique(self):
 		fenetres = []
+
+		# Creation des joueurs
 		for i in range(2):
 			self.__joueurs[i] = Joueur("Joueur " + str(i+1))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
-			fenetre = FenetreJoueur(self.__joueurs[i], self.__joueurs[(i+1)%2])
+
+		# Creation des fenêtres
+		for i in range(2):
+			fenetre = FenetreJoueur(self.__joueurs[i], self.__joueurs[(i + 1) % 2])
 			fenetres.append(fenetre)
+
 		while fenetres[0].estPret() == False or fenetres[1].estPret() == False:
 			fenetres[0].getFenetre().update()
 			fenetres[1].getFenetre().update()
