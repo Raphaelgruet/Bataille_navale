@@ -77,6 +77,8 @@ class FenetreJoueur:
 			self.__selectedSousMarin.placer(coordonnee, Direction.DROITE)
 			self.recolorPreparation()
 			self.__labelErreur.config(text="")
+			indexSousMarin = self.__joueur.getMer().getSousMarins().index(self.__selectedSousMarin)
+			self.__sousMarinButtons[indexSousMarin].config(text="sousMarin [" + str(self.__selectedSousMarin.getTaille()) + "] - " + "placé")
 		except Exception as e:
 			self.__labelErreur.config(text="[!] " + str(e))
 
