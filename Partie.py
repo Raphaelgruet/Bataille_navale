@@ -274,28 +274,68 @@ class Partie:
 			print(Style.RESET_ALL)
 			coord = Coordonnee(x, y, z)
 			self.__joueurs[0].getMer().impact(coord)
-			self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
-			self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
-			posXY(1, 41)
-			print("                                        ")
-			posXY(1, 41)
-			print(self.__joueurs[1].getCouleur2(), "ou avez vous tire?")
-			x, y, z = Partie.demandeImpact(self, 0)
-			coord = Coordonnee(x, y, z)
+			coup=False
+			while coup==False:
+				self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
+				self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
+				posXY(1, 41)
+				print("                                        ")
+				posXY(1, 41)
+				print(self.__joueurs[1].getCouleur2(), "ou avez vous tire?")
+				# verification d'un impact unique
+				impactUnique=False
+				while impactUnique==False:
+					posXY(0,0)
+					x, y, z = Partie.demandeImpact(self, 0)
+					coord = Coordonnee(x, y, z)
+					j=0
+					for i in self.__joueurs[1].getMer().getImpacts():
+						if i == coord:
+							j=j+1
+						print(j)
+					if j == 0:
+						impactUnique=True
+				typeImpact = ""
+				# demande de l'etat de ma case
+				while not (typeImpact == "t" or typeImpact == "c" or typeImpact == "r" or typeImpact == "v"):
+					typeImpact=self.phraseEnY46("Entrez le resultat de votre impact (si vous avez touche, entrer :\"t\", si vous avous avez coule, entrer :\"c\", si vous avez vous un sous marin, entrer :\"v\", si vous avous avez rien eu, entrer :\"r\"")
+				print(Style.RESET_ALL)
+				self.__joueurs[1].getMer().impact(coord)
+				self.__joueurs[1].getMer().setImpactsType(typeImpact)
 
-			typeImpact = ""
-			while not (typeImpact == "t" or typeImpact == "c" or typeImpact == "o" or typeImpact == "v"):
-				try:
-					posXY(1, 46)
-					print(
-						"                                                                                                                                                                                                           ")
-					posXY(1, 46)
-					typeImpact = input(
-						"Entrez le resultat de votre impact (si vous avez touche, entrer :\"t\", si vous avous avez coule, entrer :\"c\", si vous avez vous un sous marin, entrer :\"v\", si vous avous avez rien eu, entrer :\"o\"").lower()
-				except:
-					print("vous avez fait une erreur, veillez recommencer")
-			self.__joueurs[1].getMer().impact(coord)  # ca sera un  marquagede la couleur que je veux
-			self.__joueurs[1].getMer().setImpactsType(typeImpact)
+				print(Style.RESET_ALL)
+				# si coule
+				if typeImpact=="c":
+					cls()
+					self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
+					self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
+					print("indiquez les cases du bateau coule")
+					input()
+					coule=False
+					while coule==False:
+						caseIdentifie = False
+						while caseIdentifie == False:
+							x, y, z = Partie.demandeImpact(self, 0)
+							coord = Coordonnee(x, y, z)
+							for i in self.__joueurs[1].getMer().getImpacts():
+								if i == coord and self.__joueurs[1].getMer().getImpactsType()[self.__joueurs[1].getMer().getImpacts().index(i)]=="t":
+									self.__joueurs[1].getMer().getImpactsType()[self.__joueurs[1].getMer().getImpacts().index(i)]="c"
+									caseIdentifie = True
+						AjoutCoule =""
+						while not (AjoutCoule=="y" or AjoutCoule=="n"):
+							AjoutCoule =self.phraseEnY46("\"y\" si vous avez un case a ajouter sinon \"n\"")
+						self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
+						self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
+						if(AjoutCoule=="n"):
+							coule = True
+							coup = True
+					print(Style.RESET_ALL)
+				else:
+					ajoutCoup = ""
+					while not (ajoutCoup == "y" or ajoutCoup == "n"):
+						ajoutCoup = self.phraseEnY46("\"y\" s\'y a des cases en vue sinon\"n\"")
+					if (ajoutCoup == "n"):
+						coup = True
 			# Détection defaite
 			if self.__joueurs[0].getPV() == 0:
 				print("#####################################\n")
@@ -442,3 +482,13 @@ class Partie:
 
 		print(data)
 		self.lancementPartie()
+
+	def phraseEnY46(self,phrase):
+		try:
+			posXY(1, 46)
+			print("                                                                                                                                                                                ")
+			posXY(1, 46)
+			reponse = input(phrase).lower()
+		except:
+			print("vous avez fait une erreur, veillez recommencer")
+		return reponse

@@ -69,7 +69,7 @@ class Mer:
 				x, y = self.__impacts[i].emplacementCoordonnee()
 				Mer.affichagePion(x, y + posY, couleur)
 
-	def couleurImpact(self,valeurEmplacement, modeAffichage):
+	def couleurImpact(self, valeurEmplacement, modeAffichage):
 		if valeurEmplacement == "o":
 			if not modeAffichage:
 				return Back.BLACK
@@ -79,6 +79,8 @@ class Mer:
 			return Back.CYAN
 		elif valeurEmplacement == "t":
 			return Back.RED
+		elif valeurEmplacement == "r":
+			return Back.WHITE
 		else:
 			return Back.LIGHTRED_EX
 
