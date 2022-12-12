@@ -28,6 +28,11 @@ class Joueur:
 					pv += 1
 		return pv
 
+	def getMaxPV(self):
+		maxPV = 0
+		for sousMarin in self.getMer().getSousMarins():
+			maxPV += sousMarin.getTaille()
+		return maxPV
 	def setNom(self, value):
 		self.__nom = value
 

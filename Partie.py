@@ -36,10 +36,22 @@ class Partie:
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
-			fenetre = FenetreJoueur(self.__joueurs[i])
+			fenetre = FenetreJoueur(self.__joueurs[i], self.__joueurs[(i+1)%2])
 			fenetres.append(fenetre)
+		while fenetres[0].estPret() == False or fenetres[1].estPret() == False:
+			fenetres[0].getFenetre().update()
+			fenetres[1].getFenetre().update()
 		for fenetre in fenetres:
-			fenetre.mainloop()
+			fenetre.afficheJeu()
+		while not self.testVictoire():
+			fenetres[0].getFenetre().update()
+			fenetres[1].getFenetre().update()
+		gagnant = self.testVictoire()
+		print("#####################################\n")
+		print("  VICTOIRE de " + str(gagnant) + " !\n")
+		print("#####################################")
+		'''for fenetre in fenetres:
+			fenetre.mainloop()'''
 
 	def lancementPreparation(self):
 
