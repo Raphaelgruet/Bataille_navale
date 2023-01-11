@@ -23,10 +23,11 @@ class Partie:
 	dimensionsMers = Coordonnee(10, 5, 3)
 
 	def __init__(self):
+		pass
 		#self.lancementPreparation()
 		#self.partirSur2Ecran()
 		#self.charger("partie_22_09_47")
-		self.lancementGraphique()
+		#self.lancementGraphique()
 		#self.partirSur2Ecran()
 
 	def lancementGraphique(self):
