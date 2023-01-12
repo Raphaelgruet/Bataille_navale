@@ -24,25 +24,30 @@ class FenetrePrincipal:
 		self.__buttonCharger = tkinter.Button(self.__frame, text="Charger une partie", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.lancementPartieSolo)
 		self.__buttonCredit = tkinter.Button(self.__frame, text="CREDIT", width=20, height=2, relief="flat", bg=COLOR_BLEU, command=self.credit)
 		self.__buttonQuitter = tkinter.Button(self.__frame, text="QUITTER", width=20, height=2, relief="flat", bg=COLOR_ROUGE, command=self.quitter)
+		self.__buttonRetour = tkinter.Button(self.__frame, text="RETOUR", width=20, height=2, relief="flat", bg=COLOR_GRIS, command=self.afficher)
 		self.afficher()
 		self.update()
 
 	def afficher(self):
 		#self.__frame.config(bg=COLOR_VIOLET)
+		for widget in self.__fenetre.winfo_children():
+			widget.pack_forget()
+
 		self.__frame.pack(fill="x", anchor="center", expand=True)
-		self.__buttonNouvSolo.grid(row=0, column=0, pady=5, padx=10, sticky="nsew")
-		self.__buttonNouvDuo.grid(row=1, column=0, pady=5, padx=10, sticky="nsew")
-		self.__buttonCharger.grid(row=2, column=0, pady=5, padx=10, sticky="nsew")
-		self.__buttonCredit.grid(row=3, column=0, pady=5, padx=10, sticky="nsew")
-		self.__buttonQuitter.grid(row=4, column=0, pady=5, padx=10, sticky="nsew")
+
+	def menuChargement(self):
+		frameChargement = tkinter.Frame(self.__fenetre)
+		scroll = tkinter.Scrollbar(frameChargement)
+		scroll.pack(side="RIGHT", fill="Y")
+
+		mylist = tkinter.Listbox(frameChargement, yscrollcommand=scroll.set)
 
 	def update(self):
 		while self.__ouverte:
 			self.__fenetre.update()
 
 	def lancementPartieSolo(self):
-		self.__ouverte = False
-		self.__fenetre.destroy()
+		self.quitter()
 		partie = Partie()
 		partie.lancementGraphique()
 
