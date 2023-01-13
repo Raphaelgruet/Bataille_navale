@@ -1,4 +1,6 @@
+import os
 import tkinter
+from PIL import Image, ImageTk
 
 from Partie import Partie
 
@@ -21,30 +23,61 @@ class FenetrePrincipal:
 		self.__frame.columnconfigure(0, weight=1)
 		self.__buttonNouvSolo = tkinter.Button(self.__frame, text="Nouvelle partie SOLO", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.lancementPartieSolo)
 		self.__buttonNouvDuo = tkinter.Button(self.__frame, text="Nouvelle partie DUO", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.lancementPartieSolo)
-		self.__buttonCharger = tkinter.Button(self.__frame, text="Charger une partie", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.lancementPartieSolo)
+		self.__buttonCharger = tkinter.Button(self.__frame, text="Charger une partie", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.menuChargement)
 		self.__buttonCredit = tkinter.Button(self.__frame, text="CREDIT", width=20, height=2, relief="flat", bg=COLOR_BLEU, command=self.credit)
 		self.__buttonQuitter = tkinter.Button(self.__frame, text="QUITTER", width=20, height=2, relief="flat", bg=COLOR_ROUGE, command=self.quitter)
 		self.__buttonRetour = tkinter.Button(self.__frame, text="RETOUR", width=20, height=2, relief="flat", bg=COLOR_GRIS, command=self.afficher)
+		self.__buttonNouvSolo.grid(row=0, column=0, pady=5, padx=10, sticky="nsew")
+		self.__buttonNouvDuo.grid(row=1, column=0, pady=5, padx=10, sticky="nsew")
+		self.__buttonCharger.grid(row=2, column=0, pady=5, padx=10, sticky="nsew")
+		self.__buttonCredit.grid(row=3, column=0, pady=5, padx=10, sticky="nsew")
+		self.__buttonQuitter.grid(row=4, column=0, pady=5, padx=10, sticky="nsew")
+		self.__frame.pack(fill="x", anchor="center", expand=True)
+		image = Image.open("res/submarines.png")
+		imageResized = image.resize((600,300), Image.ANTIALIAS)
+		imagetk = ImageTk.PhotoImage(imageResized)
+		self.__imageLabel = tkinter.Label(self.__fenetre, image=imagetk)
+		self.__imageLabel.config()
 		self.afficher()
 		self.update()
 
-	def afficher(self):
-		#self.__frame.config(bg=COLOR_VIOLET)
+	def clearWindow(self):
 		for widget in self.__fenetre.winfo_children():
 			widget.pack_forget()
 
+	def afficher(self):
+		#self.__frame.config(bg=COLOR_VIOLET)
+		self.clearWindow()
+
+		self.__imageLabel.pack()
 		self.__frame.pack(fill="x", anchor="center", expand=True)
 
 	def menuChargement(self):
+		self.clearWindow()
 		frameChargement = tkinter.Frame(self.__fenetre)
+		frameChargement.columnconfigure(0, weight=1)
+		frameChargement.pack(fill="x", anchor="center", expand=True)
 		scroll = tkinter.Scrollbar(frameChargement)
-		scroll.pack(side="RIGHT", fill="Y")
+		scroll.grid(row=0, column=0, pady=5, padx=10, rowspan=4, sticky="nsew")
+		scroll.columnconfigure(0, weight=1)
 
-		mylist = tkinter.Listbox(frameChargement, yscrollcommand=scroll.set)
+		saveList = tkinter.Listbox(scroll, yscrollcommand=scroll.set)
+		for file in os.listdir("saves/"):
+			saveList.insert("end", file.title())
+		saveList.grid(row=0, column=0, sticky="nsew")
+
+		button_chargement = tkinter.Button(frameChargement, text="CHARGER", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.charger)
+		button_chargement.grid(row=4, column=0, pady=5, padx=10, sticky="nsew")
+		buttonRetour = tkinter.Button(frameChargement, text="RETOUR", width=20, height=2, relief="flat", bg=COLOR_GRIS, command=self.afficher)
+		buttonRetour.grid(row=5, column=0, pady=5, padx=10, sticky="nsew")
 
 	def update(self):
 		while self.__ouverte:
 			self.__fenetre.update()
+
+	def charger(self):
+		partie = Partie()
+		#partie.charger()
 
 	def lancementPartieSolo(self):
 		self.quitter()
