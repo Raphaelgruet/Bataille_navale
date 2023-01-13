@@ -1,8 +1,7 @@
 import os
 import tkinter
-from PIL import Image, ImageTk
-
 from Partie import Partie
+from PIL import Image, ImageTk
 
 COLOR_BLEU = "#8BD3E6"
 COLOR_GRIS = "#cccccc"
@@ -54,6 +53,7 @@ class FenetrePrincipal:
 
 	def menuChargement(self):
 		self.clearWindow()
+		self.__imageLabel.pack()
 		frameChargement = tkinter.Frame(self.__fenetre)
 		frameChargement.columnconfigure(0, weight=1)
 		frameChargement.pack(fill="x", anchor="center", expand=True)

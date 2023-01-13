@@ -2,6 +2,7 @@ import tkinter
 from Coordonnee import Coordonnee
 from Direction import Direction
 
+
 COLOR_BLEU = "#8BD3E6"
 COLOR_GRIS = "#cccccc"
 COLOR_GRIS_FONCE = "#202020"

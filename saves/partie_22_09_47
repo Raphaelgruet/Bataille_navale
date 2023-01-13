@@ -1,0 +1,40 @@
+joueurs:
+  joueur_0:
+    couleur: "\e[42m"
+    impacts:
+    - '111'
+    - '421'
+    - '221'
+    - '112'
+    - '851'
+    nom: c
+    sousMarins:
+      sousMarin_[111, 211, 311, 411]:
+        '111': t
+        '211': o
+        '311': o
+        '411': v
+      sousMarin_[121, 221, 321]:
+        '121': o
+        '221': t
+        '321': v
+  joueur_1:
+    couleur: "\e[43m"
+    impacts:
+    - '851'
+    - '221'
+    - '411'
+    - '112'
+    - '421'
+    nom: b
+    sousMarins:
+      sousMarin_[111, 211, 311, 411]:
+        '111': v
+        '211': o
+        '311': o
+        '411': t
+      sousMarin_[121, 221, 321]:
+        '121': o
+        '221': t
+        '321': v
+tour: 11
