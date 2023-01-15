@@ -57,14 +57,11 @@ class FenetrePrincipal:
 		frameChargement = tkinter.Frame(self.__fenetre)
 		frameChargement.columnconfigure(0, weight=1)
 		frameChargement.pack(fill="x", anchor="center", expand=True)
-		scroll = tkinter.Scrollbar(frameChargement)
-		scroll.grid(row=0, column=0, pady=5, padx=10, rowspan=4, sticky="nsew")
-		scroll.columnconfigure(0, weight=1)
 
-		saveList = tkinter.Listbox(scroll, yscrollcommand=scroll.set)
+		self.__saveList = tkinter.Listbox(frameChargement, selectmode="single")
 		for file in os.listdir("saves/"):
-			saveList.insert("end", file.title())
-		saveList.grid(row=0, column=0, sticky="nsew")
+			self.__saveList.insert("end", file.title())
+		self.__saveList.grid(row=0, column=0, pady=5, padx=10, rowspan=4, sticky="nsew")
 
 		button_chargement = tkinter.Button(frameChargement, text="CHARGER", width=20, height=2, relief="flat", bg=COLOR_VERT, command=self.charger)
 		button_chargement.grid(row=4, column=0, pady=5, padx=10, sticky="nsew")
@@ -76,13 +73,16 @@ class FenetrePrincipal:
 			self.__fenetre.update()
 
 	def charger(self):
-		partie = Partie()
-		#partie.charger()
+		if len(self.__saveList.curselection()) > 0:
+			sauvegardeName = self.__saveList.get(self.__saveList.curselection()[0])
+			self.quitter()
+			partie = Partie()
+			partie.charger(sauvegardeName)
 
 	def lancementPartieSolo(self):
 		self.quitter()
 		partie = Partie()
-		partie.lancementGraphique()
+		partie.preparationGraphique()
 
 	def quitter(self):
 		self.__ouverte = False

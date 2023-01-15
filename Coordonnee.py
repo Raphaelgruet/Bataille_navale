@@ -10,13 +10,13 @@ class Coordonnee:
 		self.__y = y
 		self.__z = z
 
-	def setWithString(self, coordonnee):
+	def setWithArray(self, coordonnee):
 		self.__x = int(coordonnee[0])
 		self.__y = int(coordonnee[1])
 		self.__z = int(coordonnee[2])
 
 	def __str__(self):
-		return str(self.__x) + str(self.__y) + str(self.__z)
+		return str([self.__x,self.__y,self.__z])
 
 	def __eq__(self, other):
 		if other.getX() == self.getX() and other.getY() == self.getY() and other.getZ() == self.getZ():
@@ -26,7 +26,8 @@ class Coordonnee:
 
 	def __hash__(self):
 		# Method de hashage
-		return int(self.__str__())
+		#return int(self.__str__())
+		return int(str(self.__x)+str(self.__y)+str(self.__z))
 
 	# COORDONNEE X
 

@@ -16,25 +16,24 @@ from vue.FenetreJoueur import FenetreJoueur
 # Class Partie
 class Partie:
 	__joueurs = [None, None]
-	__id = "partie_" + datetime.now().strftime("%H_%M_%S")
+	__id = "partie_" + datetime.now().strftime("%d-%m-%Y_%Hh%Mm%Ss")
 	__temps = 0
 	tour = 1
 	dimensionsMers = Coordonnee(10, 5, 3)
 
 	def __init__(self):
 		pass
+		self.__fenetres = []
 		#self.lancementPreparation()
 		#self.partirSur2Ecran()
 		#self.charger("partie_22_09_47")
 		#self.lancementGraphique()
 		#self.partirSur2Ecran()
 
-	def lancementGraphique(self):
-		fenetres = []
-
+	def preparationGraphique(self):
 		# Creation des joueurs
 		for i in range(2):
-			self.__joueurs[i] = Joueur("Joueur " + str(i+1))
+			self.__joueurs[i] = Joueur("Joueur " + str(i + 1))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
@@ -43,24 +42,35 @@ class Partie:
 		# Creation des fenêtres
 		for i in range(2):
 			fenetre = FenetreJoueur(self.__joueurs[i], self.__joueurs[(i + 1) % 2])
-			fenetres.append(fenetre)
+			self.__fenetres.append(fenetre)
 
-		while fenetres[0].estPret() == False or fenetres[1].estPret() == False:
-			fenetres[0].getFenetre().update()
-			fenetres[1].getFenetre().update()
+		while self.__fenetres[0].estPret() == False or self.__fenetres[1].estPret() == False:
+			self.__fenetres[0].getFenetre().update()
+			self.__fenetres[1].getFenetre().update()
 
-		for fenetre in fenetres:
+		self.lancementGraphique()
+
+	def lancementGraphique(self):
+
+		if len(self.__fenetres) < 1:
+			for i in range(2):
+				fenetre = FenetreJoueur(self.__joueurs[i], self.__joueurs[(i + 1) % 2])
+				self.__fenetres.append(fenetre)
+
+		for fenetre in self.__fenetres:
 			fenetre.afficheJeu()
 
 		while not self.testVictoire():
-			fenetres[0].setJouable(True)
-			while fenetres[0].estJouable():
-				for fenetre in fenetres:
+			self.__fenetres[0].setJouable(True)
+			while self.__fenetres[0].estJouable():
+				for fenetre in self.__fenetres:
 					fenetre.getFenetre().update()
-			fenetres[1].setJouable(True)
-			while fenetres[1].estJouable():
-				for fenetre in fenetres:
+			self.sauvegarder()
+			self.__fenetres[1].setJouable(True)
+			while self.__fenetres[1].estJouable():
+				for fenetre in self.__fenetres:
 					fenetre.getFenetre().update()
+			self.sauvegarder()
 
 		gagnant = self.testVictoire()
 		print("#####################################\n")
@@ -476,20 +486,21 @@ class Partie:
 			joueur.setCouleur(valeursJoueur["couleur"])
 			for valeursImpact in valeursJoueur["impacts"]:
 				coord = Coordonnee(0, 0, 0)
-				coord.setWithString(valeursImpact)
+				coord.setWithArray(eval(valeursImpact))
 				joueur.getMer().addImpact(coord)
 			for sousMarinCoords in valeursJoueur["sousMarins"].values():
 				sousMarin = SousMarin(len(sousMarinCoords.values()))
 				for valeursSousMarin in sousMarinCoords.keys():
 					coord = Coordonnee(0, 0, 0)
-					coord.setWithString(valeursSousMarin)
+					coord.setWithArray(eval(valeursSousMarin))
 					sousMarin.getCoords()[coord] = sousMarinCoords[valeursSousMarin]
 				joueur.getMer().ajouterSousMarin(sousMarin)
 			self.__joueurs[i] = joueur
 			i += 1
 
 		print(data)
-		self.lancementPartie()
+		#self.lancementPartie()
+		self.lancementGraphique()
 
 	def phraseEnY46(self,phrase):
 		try:

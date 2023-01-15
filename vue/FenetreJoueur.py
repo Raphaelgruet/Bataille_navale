@@ -74,6 +74,8 @@ class FenetreJoueur:
 		self.createButtonsPreparation()
 
 	def afficheJeu(self):
+		self.__joueur.setNom(self.__nameLabel.get())
+		self.__fenetre.title("Bataille navale - " + self.__joueur.getNom())
 		self.setJouable(False)
 		self.__preparationFrame.destroy()
 		self.__jeuFrame.pack(anchor="center", expand=1)
@@ -88,6 +90,7 @@ class FenetreJoueur:
 		self.__merFrameJeu.grid(row=1, column=0, columnspan=2, sticky="nsew")
 		labelPV = tkinter.Label(self.__jeuFrame, text="Points de vie : " + str(self.__joueur.getPV()) + "/" + str(self.__joueur.getMaxPV()))
 		labelPV.grid(row=2, column=0)
+		self.recolorJeu()
 
 	def selectionneSousMarin(self, index):
 		for button in self.__sousMarinButtons:
