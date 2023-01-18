@@ -1,20 +1,20 @@
 from Mer import Mer
 from colorama import Fore, Style, Back
 from Outils import cls
-
+from Coordonnee import Coordonnee
 # Class Joueur
 class Joueur:
 	__mer = None
 	__nom = ""
 	__couleur = None
 	__couleur2 = None
-
+	__sauvegardeDerniereToucheIa = None
 	def __init__(self, nom):
 		self.__nom = nom
 		self.__couleur = None
 		self.__couleur2 = None
 		self.__mer = Mer()
-
+		self.__sauvegardeDerniereToucheIa = Coordonnee(0,0,0)
 	def __str__(self):
 		return str(self.__nom)
 
@@ -51,7 +51,10 @@ class Joueur:
 		self.__couleur2=value
 	def getMer(self):
 		return self.__mer
-
+	def getSauvegardeDerniereToucheIa(self):
+		return self.__sauvegardeDerniereToucheIa
+	def setSauvegardeDerniereToucheIa(self,coordonne):
+		self.__sauvegardeDerniereToucheIa=coordonne
 	def choixCouleur(self):  # permet de savoir quelle couleur va choisir le premier joueur
 		couleurChoisi = False
 		while not couleurChoisi:
@@ -70,3 +73,4 @@ class Joueur:
 				print(Style.RESET_ALL)
 				couleurChoisi = True
 				cls()
+()

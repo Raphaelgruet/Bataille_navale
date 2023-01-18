@@ -38,6 +38,7 @@ class SousMarin:
 					if (smCoord.getX() == coordonnee.getX() and
 							coordonnee.getY() - self.__taille < smCoord.getY() <= coordonnee.getY() and
 							smCoord.getZ() == coordonnee.getZ()):
+
 						raise Exception("Il y a déjà un sous marin à cet emplacement")
 			if coordonnee.getY() - self.__taille+1 > 0:
 				self.__coords.clear()
@@ -45,6 +46,9 @@ class SousMarin:
 					coord = Coordonnee(coordonnee.getX(), coordonnee.getY() - i, coordonnee.getZ())
 					self.__coords[coord] = 'o'
 			else:
+				#if IA:
+				#	raise Exception()
+				#else:
 				raise Exception("Le sous marin est trop grand pour être placé ici")
 		if direction == Direction.DROITE:
 			for sousMarin in self.__mer.getSousMarins():

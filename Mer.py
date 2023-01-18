@@ -7,7 +7,7 @@ class Mer:
 
 	__sousMarins = []
 	__impacts = []
-	__impactsType = []
+	__impactsType = {}
 	__dimentionX = 10
 	__dimentionY = 5
 	__dimentionZ = 3
@@ -19,6 +19,7 @@ class Mer:
 	def __init__(self):
 		self.__sousMarins = []
 		self.__impacts = []
+		self.__impactsType = {}
 
 
 	def affichage(self, couleurPlateau, couleurPion, modeAffichage):
@@ -53,7 +54,7 @@ class Mer:
 	def affichageImpact(self, posY, modeAffichage):
 		couleur = None
 		valeurEmplacement = None
-		if self.__impactsType==[]:
+		if self.__impactsType=={} or modeAffichage == True :
 			for impact in self.__impacts:
 				x, y = impact.emplacementCoordonnee()
 				couleur = Back.BLUE
@@ -64,9 +65,9 @@ class Mer:
 					x, y = i.emplacementCoordonnee()
 					Mer.affichagePion(x, y+posY, couleur)
 		else:
-			for i in range(len(self.__impactsType)):
-				couleur = self.couleurImpact(self.__impactsType[i], modeAffichage)
-				x, y = self.__impacts[i].emplacementCoordonnee()
+			for key in self.__impactsType.keys():
+				couleur = self.couleurImpact(self.__impactsType[key], modeAffichage)
+				x, y = key.emplacementCoordonnee()
 				Mer.affichagePion(x, y + posY, couleur)
 
 	def couleurImpact(self, valeurEmplacement, modeAffichage):
@@ -204,5 +205,5 @@ class Mer:
 		return self.__impacts.append(coordonnee)
 	def getImpactsType(self):
 		return self.__impactsType
-	def setImpactsType(self, value):
-		self.__impactsType.append(value)
+	def setImpactsType(self, keys, value):
+		self.__impactsType[keys]=value
