@@ -28,37 +28,7 @@ class Partie:
 		#self.lancementGraphique()
 
 	def creationDesJoueur(self):
-		# Partie test
 		cls()
-		Mer.affichagePlateauVide(1, 2, Back.WHITE)
-		posXY(73, 28)
-		print("---------- Bataille navale ----------")
-		posXY(70, 29)
-		input("appuyer sur entrer pour commencer la partie ...")
-		cls()
-
-		# Creation des joueurs
-
-		self.__joueurs[1] = Joueur("b")
-		self.__joueurs[0] = Joueur("c")  # Creation des joueurs à partir du nom entré dans le terminal
-		print("Cette bataille opposera", self.__joueurs[0].getNom().upper(), "contre",
-			  self.__joueurs[1].getNom().upper())
-		print("Bonne bataille !")
-		input()
-		cls()
-
-		# choix couleur
-
-		self.__joueurs[0].setCouleur(Back.YELLOW)
-		self.__joueurs[1].setCouleur(Back.GREEN)
-		self.__joueurs[1].setCouleur2(Fore.LIGHTGREEN_EX)
-		self.__joueurs[0].setCouleur2(Fore.LIGHTYELLOW_EX)
-		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL, ",",
-			  self.__joueurs[1],
-			  "aura donc la couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
-		input()
-		cls()
-		'''cls()
 		Mer.affichagePlateauVide(1, 2, Back.WHITE)
 		posXY(73, 28)
 		print("---------- Bataille navale ----------")
@@ -83,7 +53,7 @@ class Partie:
 			self.__joueurs[1].setCouleur2(Fore.LIGHTGREEN_EX)
 		print(self.__joueurs[0], "a choisi la couleur", self.__joueurs[0].getCouleur() + "   ", Style.RESET_ALL)
 		print(self.__joueurs[1], "aura pour couleur", self.__joueurs[1].getCouleur() + "   ", Style.RESET_ALL)
-		input()'''
+		input()
 
 	def placementSousMarins(self,NombreDeJoueur, Ia):
 		for i in range(NombreDeJoueur):
@@ -124,14 +94,10 @@ class Partie:
 									direction=random.choice([Direction.BAS, Direction.GAUCHE, Direction.DROITE])
 								else:
 									direction=random.choice([Direction.BAS, Direction.GAUCHE, Direction.HAUT, Direction.DROITE])
-							coord = Coordonnee(x, y, z)
-
 						else:
 							print(self.__joueurs[i].getCouleur2())
-							direction=Direction.DROITE
-							# direction, x, y, z = Partie.demandeEmplacement(self, j)
-							coord = Coordonnee(1, j + 1, 1)
-						# coord = Coordonnee(x, y, z)
+							direction, x, y, z = Partie.demandeEmplacement(self, j)
+						coord = Coordonnee(x, y, z)
 						self.__joueurs[i].getMer().getSousMarins()[j].placer(coord, direction)
 						placer = True
 					except Exception as e:
