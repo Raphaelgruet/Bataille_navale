@@ -212,8 +212,7 @@ class Partie:
 			if (i == 1):
 				x, y, z = self.demandeImpactIa(j)
 			else:
-				x, y, z = self.demandeImpactIa(j)
-				#x, y, z = self.demandeImpact(20)
+				x, y, z = self.demandeImpact(20)
 			coord = Coordonnee(x, y, z)
 			self.__joueurs[j].getMer().impact(coord)
 			print(Style.RESET_ALL)
@@ -298,7 +297,6 @@ class Partie:
 				self.__joueurs[0].getMer().impact(coord)
 			elif emplacement == 2:
 				print(self.__joueurs[1].getCouleur2(), "ou avez vous tire?")
-				# verification d'un impact unique/////////////////////////////////////a utiliser a d'autre endroitb (creer une fonction)/////////////////////////////
 				impactUnique = False
 				while impactUnique == False:
 					x, y, z = Partie.demandeImpact(self, 0)
@@ -324,9 +322,6 @@ class Partie:
 					else:
 						Partie.neyttoyageScript(self, 1)
 						print("vous avez selectionne une case deja remplit, veillez recommencer")
-
-				# demande de l'etat de ma case
-
 				print(Style.RESET_ALL)
 				self.__joueurs[1].getMer().setImpactsType(coord, typeImpact)
 				print(Style.RESET_ALL)
