@@ -22,8 +22,7 @@ class Partie:
 
 	def __init__(self):
 		pass
-		#self.__fenetres = []
-		self.lancementPreparation()
+		self.__fenetres = []
 		#self.preparationGraphique()
 		#self.charger("partie_22_09_47")
 		#self.lancementGraphique()
@@ -142,7 +141,6 @@ class Partie:
 						print(Style.RESET_ALL)
 						self.__joueurs[i].getMer().affichage(Back.WHITE, self.__joueurs[i].getCouleur(), True)
 						input()
-		self.__joueurs[1].getMer().affichage(Back.WHITE, self.__joueurs[1].getCouleur(), True)
 		cls()
 		posXY(1, 1)
 
@@ -195,15 +193,26 @@ class Partie:
 		print("#####################################")
 		'''for fenetre in fenetres:
 			fenetre.mainloop()'''
+	def menu(self):
+		n=-1
+		print("choissiez votre mode:\n")
+		print("1: contre Ia:\n")
+		print("3: sur deux ecran:\n")
+		print("2: 1VS1 sur le meme ecran\n")
+		while not 0 < n < 4:
+			try:
+				n = int(input())
+			except:
+				print(" vous avez fait une erreur, veillez recommencer")
+		return n
+		# Placement des sous-marins
 
 	def lancementPreparation(self):
-		n = 1
-		self.creationDesJoueur()
-		# Placement des sous-marins
-		if(n==2):
+		n = self.menu()
+		if (n == 2):
 			self.creationDesJoueur()
 			self.placementSousMarins(2, False)
-		elif(n==1):
+		elif (n == 1):
 			self.creationDesJoueur()
 			self.placementSousMarins(2, True)
 		self.sauvegarder()
@@ -219,13 +228,10 @@ class Partie:
 			else:
 				self.__joueurs[i].setCouleur(Back.YELLOW)
 		if(n==1):
-			input("mldf,dl,gfmdlf,gmld,3")
 			self.lancementPartieIa()
 		elif(n==3):
-			input("mldf,dl,gfmdlf,gmld,2")
 			self.partirSur2Ecran()
 		else:
-			input("mldf,dl,gfmdlf,gmld,")
 			self.lancementPartie()
 
 	def lancementPartieIa(self):
@@ -233,13 +239,15 @@ class Partie:
 		while True:
 			i = (self.tour - 1) % 2
 			j = (self.tour) % 2
-			self.__joueurs[j].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(), False)
+			if i==0:
+				self.__joueurs[j].getMer().affichage(self.__joueurs[i].getCouleur(), self.__joueurs[i].getCouleur(), False)
 			# Detection coordonnées + impact
 			print(self.__joueurs[j].getCouleur2())
 			if (i == 1):
 				x, y, z = self.demandeImpactIa(j)
 			else:
-				x, y, z = self.demandeImpact(20)
+				x, y, z = self.demandeImpactIa(j)
+				#x, y, z = self.demandeImpact(20)
 			coord = Coordonnee(x, y, z)
 			self.__joueurs[j].getMer().impact(coord)
 			print(Style.RESET_ALL)
@@ -545,62 +553,76 @@ class Partie:
 		print("                                                                                          ")
 		print("                                                                                          ")
 		posXY(1, 41 - positionIniciale)
+	def posAnciennePieceIa(self,joueur):
+		dodo= Coordonnee(0, 0, 0)
+		for sousMarin in joueur.getMer().getSousMarins():
+			for coordonne in sousMarin.getCoords().keys():
+				if (joueur.getSauvegardeDerniereToucheIa() in sousMarin.getCoords()):
+					if (sousMarin.getCoords()[joueur.getSauvegardeDerniereToucheIa()] == 't'):
+						dodo = coordonne
 
+					elif (sousMarin.getCoords()[joueur.getSauvegardeDerniereToucheIa()] == 'c'):
+						dodo = Coordonnee(0, 0, 0)
+					else:
+						dodo = joueur.getSauvegardeDerniereToucheIa()
+				else:
+					if (joueur.getMer().getImpacts()[-1] == coordonne):
+						if (sousMarin.getCoords()[coordonne] == 't'):
+							return coordonne
+		return dodo
 	def demandeImpactIa(self,joueur):
 		if (len(self.__joueurs[joueur].getMer().getImpacts()) != 0):
-			for sousMarin in  self.__joueurs[joueur].getMer().getSousMarins():
+			self.__joueurs[joueur].setSauvegardeDerniereToucheIa(self.posAnciennePieceIa(self.__joueurs[joueur]))
+			for sousMarin in self.__joueurs[joueur].getMer().getSousMarins():
 				for coordonne in sousMarin.getCoords().keys():
 					if sousMarin.getCoords()[coordonne] == 'v':
 						return coordonne.getX(), coordonne.getY(), coordonne.getZ()
-					if (sousMarin.getCoords()[coordonne] == 't'):
-							self.__joueurs[joueur].setSauvegardeDerniereToucheIa(coordonne)
-					if(self.__joueurs[joueur].getMer().getImpacts()[-1] == coordonne):
-						if (sousMarin.getCoords()[coordonne] == 't'):
-							self.__joueurs[joueur].setSauvegardeDerniereToucheIa(coordonne)
-						if (self.__joueurs[joueur].getSauvegardeDerniereToucheIa().__str__()!="000"):
-#regarder si les coordoonne de getSauvegardeDerniereToucheIa est passé en coule
-							if(self.__joueurs[joueur].getSauvegardeDerniereToucheIa() in sousMarin.getCoords()):
-								if (sousMarin.getCoords()[self.__joueurs[joueur].getSauvegardeDerniereToucheIa()] == 'c'):
-									self.__joueurs[joueur].getSauvegardeDerniereToucheIa().__str__() == "000"
 #retenu d'une coordonne touche
-					if(sousMarin.getCoords()[coordonne]=='t'):
-						impactUnique = False
-						caseAutourPlein=0
-						while impactUnique == False:
-							x, y, z = random.randint(-1,1)+coordonne.getX(), random.randint(-1,1)+coordonne.getY(), coordonne.getZ()
-							if caseAutourPlein>40:
-								x, y, z = random.randint(-2, 2) + coordonne.getX(), random.randint(-2,2) + coordonne.getY(), coordonne.getZ()
-							if caseAutourPlein>80:
-								x, y, z = random.randint(-3, 3) + coordonne.getX(), random.randint(-3,3) + coordonne.getY(), coordonne.getZ()
-							if caseAutourPlein > 140:
-								x, y, z = random.randint(-4, 4) + coordonne.getX(), random.randint(-4,
-																								   4) + coordonne.getY(), coordonne.getZ()
-							coord = Coordonnee(x, y, z)
-							j = 0
-							if (x<1 or x>10 ):
-								j = j + 1
-							elif( y<1 or y>5 ):
-								j = j + 1
-							if(j==0):
-								for sousMarins in self.__joueurs[joueur].getMer().getSousMarins():
-									for coordsousMarin in sousMarins.getCoords().keys():
+		if (self.__joueurs[joueur].getSauvegardeDerniereToucheIa()!=Coordonnee(0, 0, 0)):
+			impactUnique = False
+			caseAutourPlein=0
+			while impactUnique == False:
+				x, y, z = random.randint(-1,1)+self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getX(), random.randint(-1,1)+self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getY(), self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getZ()
+				if caseAutourPlein>100:
+					x, y, z = random.randint(-2, 2) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getX(), random.randint(-2,2) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getY(), self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getZ()
+				if caseAutourPlein>300:
+					x, y, z = random.randint(-3, 3) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getX(), random.randint(-3,3) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getY(),self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getZ()
+				if caseAutourPlein > 600:
+					x, y, z = random.randint(-4, 4) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getX(), random.randint(-4,4) + self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getY(), self.__joueurs[joueur].getSauvegardeDerniereToucheIa().getZ()
+				coord = Coordonnee(x, y, z)
+				j = 0
+				if (x<1 or x>10 ):
+					j = j + 1
+				elif( y<1 or y>5 ):
+					j = j + 1
+				if(j==0):
+					for sousMarins in self.__joueurs[joueur].getMer().getSousMarins():
+						for coordsousMarin in sousMarins.getCoords().keys():
 
-										if coordsousMarin==coord:
-											if  sousMarins.getCoords()[coord]!= 'o':
-												if sousMarins.getCoords()[coord]!= 'v':
-													j = j + 1
-
-												j = j + 1
-											elif (coordsousMarin in self.__joueurs[joueur].getMer().getImpacts()):
-												j = j + 1
-							caseAutourPlein+=1
-							if j == 0:
-								print(coord)
-								print(caseAutourPlein)
-								input()
-								impactUnique = True
-							if caseAutourPlein>4:
-								coordonne.increaseX
-						return x, y, z
-		x, y, z = random.randint(1, 10), random.randint(1, 5), random.randint(1, 3)
+							if coordsousMarin==coord:
+								if  sousMarins.getCoords()[coord]!= 'o':
+									if sousMarins.getCoords()[coord]!= 'v':
+										j = j + 1
+									else:
+										j = j + 1
+								elif (coordsousMarin in self.__joueurs[joueur].getMer().getImpacts()):
+									j = j + 1
+				caseAutourPlein+=1
+				if j == 0:
+					impactUnique = True
+			print("coordonne final    ", x, y, z)
+			print("self.__joueurs[joueur].getSauvegardeDerniereToucheIa()   ", self.__joueurs[joueur].getSauvegardeDerniereToucheIa())
+			print("caseAutourPlein   ",caseAutourPlein)
+			input()
+			return x, y, z
+		impactUnique = False
+		while impactUnique == False:
+			x, y, z = random.randint(1, 10), random.randint(1, 5), random.randint(1, 3)
+			coord = Coordonnee(x, y, z)
+			j = 0
+			for key in self.__joueurs[j].getMer().getImpacts():
+				if key == coord:
+						j = j + 1
+			if j == 0:
+				impactUnique = True
 		return x, y, z
