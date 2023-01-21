@@ -272,7 +272,7 @@ class Partie:
 		while True:  # tant qu'il a des PV
 			self.__joueurs[0].getMer().affichageEnSolo(self.__joueurs[0].getCouleur(), True)
 			self.__joueurs[1].getMer().affichageEnSolo(self.__joueurs[1].getCouleur(), False)
-			Partie.neyttoyageScript(self, 1)
+			Partie.nettoyageScript(self, 1)
 			posXY(1, 41)
 			emplacement = 0
 			while not 0 < emplacement < 3:
@@ -287,7 +287,7 @@ class Partie:
 				except:
 					print("vous avez fait une erreur, veillez recommencer")
 
-			Partie.neyttoyageScript(self, 1)
+			Partie.nettoyageScript(self, 1)
 			posXY(1, 41)
 			if emplacement == 1:
 				print(self.__joueurs[0].getCouleur2(), "ou votre adversaire a t-il tire?")
@@ -320,7 +320,7 @@ class Partie:
 					if j == 0:
 						impactUnique = True
 					else:
-						Partie.neyttoyageScript(self, 1)
+						Partie.nettoyageScript(self, 1)
 						print("vous avez selectionne une case deja remplit, veillez recommencer")
 				print(Style.RESET_ALL)
 				self.__joueurs[1].getMer().setImpactsType(coord, typeImpact)
@@ -443,7 +443,7 @@ class Partie:
 
 	def demandeImpact(self, r):
 
-		Partie.neyttoyageScript(self, r)
+		Partie.nettoyageScript(self, r)
 		x, y, z = -1, -1, -1
 		posXY(1, 42 - r)
 		print("Entrez les coordonnées de votre impact :")
@@ -475,7 +475,7 @@ class Partie:
 			except:
 				print("         vous avez fait une erreur, veillez recommencer")
 
-		Partie.neyttoyageScript(self, r)
+		Partie.nettoyageScript(self, r)
 		return x, y, z
 
 
@@ -505,7 +505,7 @@ class Partie:
 		print(data)
 		self.lancementPartie()
 
-	def neyttoyageScript(self, positionIniciale):
+	def nettoyageScript(self, positionIniciale):
 		posXY(1, 42 - positionIniciale)
 		print("                                                                                                                                                   ")
 		print("                                                                                          ")
@@ -538,7 +538,7 @@ class Partie:
 				for coordonne in sousMarin.getCoords().keys():
 					if sousMarin.getCoords()[coordonne] == 'v':
 						return coordonne.getX(), coordonne.getY(), coordonne.getZ()
-#retenu d'une coordonne touche
+		#retenu d'une coordonne touche
 		if (self.__joueurs[joueur].getSauvegardeDerniereToucheIa()!=Coordonnee(0, 0, 0)):
 			impactUnique = False
 			caseAutourPlein=0

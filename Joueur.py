@@ -4,11 +4,7 @@ from Outils import cls
 from Coordonnee import Coordonnee
 # Class Joueur
 class Joueur:
-	__mer = None
-	__nom = ""
-	__couleur = None
-	__couleur2 = None
-	__sauvegardeDerniereToucheIa = None
+
 	def __init__(self, nom):
 		self.__nom = nom
 		self.__couleur = None

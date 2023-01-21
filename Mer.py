@@ -5,12 +5,6 @@ from Coordonnee import Coordonnee
 # Class de Mer
 class Mer:
 
-	__sousMarins = []
-	__impacts = []
-	__impactsType = {}
-	__dimentionX = 10
-	__dimentionY = 5
-	__dimentionZ = 3
 	'''__dimentionX = Partie.dimensionsMers.getX()
 	__dimentionY = Partie.dimensionsMers.getY()
 	__dimentionZ = Partie.dimensionsMers.getZ()'''
@@ -20,6 +14,9 @@ class Mer:
 		self.__sousMarins = []
 		self.__impacts = []
 		self.__impactsType = {}
+		self.__dimentionX = 10
+		self.__dimentionY = 5
+		self.__dimentionZ = 3
 
 
 	def affichage(self, couleurPlateau, couleurPion, modeAffichage):

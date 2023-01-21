@@ -1,10 +1,6 @@
 
 class Coordonnee:
 
-	__x = 0
-	__y = 0
-	__z = 0
-
 	def __init__(self, x, y, z):
 		self.__x = x
 		self.__y = y
