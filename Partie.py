@@ -397,12 +397,12 @@ class Partie:
 		self.lancementGraphique()
 
 	def demandeEmplacement(self, j):
-		self.neyttoyageScript(20)
+		self.nettoyageScript(20)
 		x, y, z = -1, -1, -1
 		direction = None
 		posXY(1, 23)
 		print("Entrez les coordonnées de votre impact " + str(j + 1) + " :")
-		while not 0 < x < Partie.dimensionsMers.getX() + 1:
+		while not 0 < x < self.dimensionsMers.getX() + 1:
 			try:
 				posXY(1, 24)
 				print("                                                                                                                   ")
@@ -411,7 +411,7 @@ class Partie:
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
-		while not 0 < y < Partie.dimensionsMers.getY() + 1:
+		while not 0 < y < self.dimensionsMers.getY() + 1:
 			try:
 				posXY(1, 25)
 				print("                                                                                                                           ")
@@ -420,7 +420,7 @@ class Partie:
 			except:
 				print("vous avez fait une erreur, veillez recommencer")
 
-		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
+		while not 0 < z < self.dimensionsMers.getZ() + 1:
 			try:
 				posXY(1, 26)
 				print("                                                                                                                    ")
@@ -455,7 +455,7 @@ class Partie:
 		x, y, z = -1, -1, -1
 		posXY(1, 42 - r)
 		print("Entrez les coordonnées de votre impact :")
-		while not 0 < x < Partie.dimensionsMers.getX() + 1:
+		while not 0 < x < self.dimensionsMers.getX() + 1:
 			try:
 				posXY(1, 43 - r)
 				print("                                                                                          ")
@@ -464,7 +464,7 @@ class Partie:
 			except:
 				print("         vous avez fait une erreur, veillez recommencer")
 
-		while not 0 < y < Partie.dimensionsMers.getY() + 1:
+		while not 0 < y < self.dimensionsMers.getY() + 1:
 			try:
 				posXY(1, 44 - r)
 				print("                                                                                         ")
@@ -474,7 +474,7 @@ class Partie:
 				print("         vous avez fait une erreur, veillez recommencer")
 				input()
 
-		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
+		while not 0 < z < self.dimensionsMers.getZ() + 1:
 			try:
 				posXY(1, 45 - r)
 				print("                                                                                         ")

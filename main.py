@@ -12,4 +12,3 @@ if __name__ == '__main__':
 		if arg == "nogui":
 			Partie().lancementPreparation()
 	fenetre = FenetrePrincipal()
-	#Partie().lancementPreparation()

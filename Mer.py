@@ -31,7 +31,6 @@ class Mer:
 			Mer.affichageImpact(self, 0, modeAffichage)
 		Mer.legende(self)
 		posXY(1, 24)
-
 	def affichageEnSolo(self, couleurPlateau, modeAffichage):
 		if modeAffichage:
 			Mer.affichagePlateauVide(1, 2, couleurPlateau)
