@@ -12,22 +12,23 @@ from datetime import datetime
 from vue.FenetreJoueur import FenetreJoueur
 import random
 
+
 # Class Partie
 class Partie:
-	__joueurs = [None, None]
-	__id = "partie_" + datetime.now().strftime("%d-%m-%Y_%Hh%Mm%Ss")
-	__temps = 0
-	tour = 1
-	dimensionsMers = Coordonnee(10, 5, 3)
 
 	def __init__(self):
 		pass
 		self.__fenetres = []
+		self.__joueurs = [None, None]
+		self.__id = "partie_" + datetime.now().strftime("%d-%m-%Y_%Hh%Mm%Ss")
+		self.__temps = 0
+		self.tour = 1
+		self.dimensionsMers = Coordonnee(10, 5, 3)
 		#self.preparationGraphique()
 		#self.charger("partie_22_09_47")
 		#self.lancementGraphique()
 
-	def creationDesJoueur(self):
+	def creationDesJoueurs(self):
 		cls()
 		Mer.affichagePlateauVide(1, 2, Back.WHITE)
 		posXY(73, 28)
@@ -126,6 +127,8 @@ class Partie:
 			self.__fenetres.append(fenetre)
 
 		while self.__fenetres[0].estPret() == False or self.__fenetres[1].estPret() == False:
+			if self.__fenetres[0].isOuverte() == False or self.__fenetres[1].isOuverte() == False:
+				return
 			self.__fenetres[0].getFenetre().update()
 			self.__fenetres[1].getFenetre().update()
 
@@ -142,16 +145,19 @@ class Partie:
 			fenetre.afficheJeu()
 
 		while not self.testVictoire():
-			self.__fenetres[0].setJouable(True)
-			while self.__fenetres[0].estJouable():
+			i = (self.tour+1)%2
+			self.__fenetres[i].setJouable(True)
+			while self.__fenetres[i].estJouable():
+				if self.__fenetres[i].isOuverte() == False or self.__fenetres[1].isOuverte() == False:
+					for fenetre in self.__fenetres:
+						if fenetre.isOuverte():
+							fenetre.quitter()
+					return
 				for fenetre in self.__fenetres:
 					fenetre.getFenetre().update()
+			self.tour += 1
 			self.sauvegarder()
-			self.__fenetres[1].setJouable(True)
-			while self.__fenetres[1].estJouable():
-				for fenetre in self.__fenetres:
-					fenetre.getFenetre().update()
-			self.sauvegarder()
+			self.__fenetres[(i+1)%2].setJouable(True)
 
 		gagnant = self.testVictoire()
 		print("#####################################\n")
@@ -163,8 +169,8 @@ class Partie:
 		n=-1
 		print("choissiez votre mode:\n")
 		print("1: contre Ia:\n")
-		print("3: sur deux ecran:\n")
 		print("2: 1VS1 sur le meme ecran\n")
+		print("3: sur deux ecran:\n")
 		while not 0 < n < 4:
 			try:
 				n = int(input())
@@ -176,11 +182,12 @@ class Partie:
 	def lancementPreparation(self):
 		n = self.menu()
 		if (n == 2):
-			self.creationDesJoueur()
+			self.creationDesJoueurs()
 			self.placementSousMarins(2, False)
 		elif (n == 1):
-			self.creationDesJoueur()
+			self.creationDesJoueurs()
 			self.placementSousMarins(2, True)
+
 		self.sauvegarder()
 		cls()
 		posXY(1, 1)
@@ -260,7 +267,7 @@ class Partie:
 
 	def partirSur2Ecran(self):
 
-		self.creationDesJoueur()
+		self.creationDesJoueurs()
 		# Placement des sous-marin
 		self.placementSousMarins(1,False)
 		# qui commmence

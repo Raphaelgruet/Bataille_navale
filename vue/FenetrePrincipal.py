@@ -15,6 +15,7 @@ class FenetrePrincipal:
 	def __init__(self):
 		self.__ouverte = True
 		self.__fenetre = tkinter.Tk()
+		self.__fenetre.protocol("WM_DELETE_WINDOW", self.quitter)
 		self.__fenetre.title("Bataille navale")
 		self.__fenetre.geometry("600x600")
 		self.__fenetre.resizable(width=False, height=False)

@@ -14,6 +14,7 @@ COLOR_VIOLET = "#bdb2ff"
 class FenetreJoueur:
 
 	def __init__(self, joueur, adversaire):
+		self.__ouverte = True
 		self.__joueur = joueur
 		self.__adversaire = adversaire
 		self.__buttons = []
@@ -23,6 +24,7 @@ class FenetreJoueur:
 		self.__direction = Direction.DROITE
 
 		self.__fenetre = tkinter.Tk()
+		self.__fenetre.protocol("WM_DELETE_WINDOW", self.quitter)
 		self.__fenetre.title("Bataille navale - " + joueur.getNom())
 		self.__fenetre.geometry("1280x720")
 		self.__fenetre.resizable(width=False, height=False)
@@ -46,9 +48,6 @@ class FenetreJoueur:
 		self.__selectedSousMarin = None
 
 		self.affichePreparation()
-
-	def mainloop(self):
-		self.__fenetre.mainloop()
 
 	def affichePreparation(self):
 		self.__labelAction.pack(anchor="center", expand=1)
@@ -116,6 +115,10 @@ class FenetreJoueur:
 			self.__adversaire.getMer().impact(coordonnee)
 			self.recolorJeu()
 			self.setJouable(False)
+
+	def quitter(self):
+		self.__ouverte = False
+		self.__fenetre.destroy()
 
 	def interactionPret(self):
 		for sousMarin in self.__joueur.getMer().getSousMarins():
@@ -190,6 +193,8 @@ class FenetreJoueur:
 	def getFenetre(self):
 		return self.__fenetre
 
+	def isOuverte(self):
+		return self.__ouverte
 	def estJouable(self):
 		return self.__jouable
 
