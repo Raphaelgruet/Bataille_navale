@@ -69,6 +69,11 @@ class FenetrePrincipal:
 		buttonRetour = tkinter.Button(frameChargement, text="RETOUR", width=20, height=2, relief="flat", bg=COLOR_GRIS, command=self.afficher)
 		buttonRetour.grid(row=5, column=0, pady=5, padx=10, sticky="nsew")
 
+	def menuCredit(self):
+		self.clearWindow()
+		self.__imageLabel.pack()
+		
+
 	def update(self):
 		while self.__ouverte:
 			self.__fenetre.update()

@@ -187,6 +187,9 @@ class FenetreJoueur:
 		mer = self.__joueur.getMer()
 		return self.__buttons[coordonnee.getX()-1+mer.getDimentionX()*(coordonnee.getY()-1)+mer.getDimentionX()*mer.getDimentionY()*(coordonnee.getZ()-1)]
 
+	def terminer(self, joueur):
+		self.__jouable = False
+		self.__labelErreur.config(fg=COLOR_VIOLET, text=">> " + joueur.getNom() + " a gagner la partie ! <<")
 	def estPret(self):
 		return self.__pret
 

@@ -116,9 +116,9 @@ class Partie:
 
 		for i in range(2):
 			self.__joueurs[i] = Joueur("Joueur " + str(i + 1))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))'''
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
 
 		# Creation des fenêtres
@@ -160,11 +160,12 @@ class Partie:
 			self.__fenetres[(i+1)%2].setJouable(True)
 
 		gagnant = self.testVictoire()
+		for fenetre in self.__fenetres:
+			fenetre.terminer(gagnant)
 		print("#####################################\n")
 		print("  VICTOIRE de " + str(gagnant) + " !\n")
 		print("#####################################")
-		'''for fenetre in fenetres:
-			fenetre.mainloop()'''
+
 	def menu(self):
 		n=-1
 		print("choissiez votre mode:\n")
