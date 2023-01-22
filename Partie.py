@@ -397,6 +397,7 @@ class Partie:
 		self.lancementGraphique()
 
 	def demandeEmplacement(self, j):
+		self.neyttoyageScript(20)
 		x, y, z = -1, -1, -1
 		direction = None
 		posXY(1, 23)
@@ -404,7 +405,7 @@ class Partie:
 		while not 0 < x < Partie.dimensionsMers.getX() + 1:
 			try:
 				posXY(1, 24)
-				print("                                                                                         ")
+				print("                                                                                                                   ")
 				posXY(1, 24)
 				x = int(input("  La COLONNE du debut de votre sous-marin = "))
 			except:
@@ -413,7 +414,7 @@ class Partie:
 		while not 0 < y < Partie.dimensionsMers.getY() + 1:
 			try:
 				posXY(1, 25)
-				print("                                                                                         ")
+				print("                                                                                                                           ")
 				posXY(1, 25)
 				y = int(input("  La LIGNE du debut de votre sous-marin = "))
 			except:
@@ -422,7 +423,7 @@ class Partie:
 		while not 0 < z < Partie.dimensionsMers.getZ() + 1:
 			try:
 				posXY(1, 26)
-				print("                                                                                         ")
+				print("                                                                                                                    ")
 				posXY(1, 26)
 				z = int(input("  La PROFONDEUR de votre sous-marin = "))
 			except:
@@ -432,7 +433,7 @@ class Partie:
 				direction == Direction.DROITE or direction == Direction.GAUCHE or direction == Direction.HAUT or direction == Direction.BAS):
 			try:
 				posXY(1, 27)
-				print("                                                                                                   ")
+				print("                                                                                                                                                           ")
 				posXY(1, 27)
 				direction = input(
 					"  La DIRECTION de votre sous-marin (\"D\"=DROITE, \"G\"=GAUCHE, \"H\"=HAUT, \"B\"=BAS) = ")
