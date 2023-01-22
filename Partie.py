@@ -116,9 +116,9 @@ class Partie:
 
 		for i in range(2):
 			self.__joueurs[i] = Joueur("Joueur " + str(i + 1))
-			'''self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(4))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
-			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))'''
+			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(3))
 			self.__joueurs[i].getMer().ajouterSousMarin(SousMarin(2))
 
 		# Creation des fenêtres
